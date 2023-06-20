@@ -192,61 +192,63 @@
 </template>
 
 <script>
-import Form from "@/assets/json/form1.json";
-import CID10 from "@/assets/json/cid10.min.json";
-import { mapActions, mapGetters } from "vuex";
+import { defineAsyncComponent } from 'vue';
+import Form from '@/assets/json/form1.json';
+import CID10 from '@/assets/json/cid10.min.json';
+import { mapActions, mapGetters } from 'vuex';
 export default {
   data: () => ({
-    idade: "",
-    sexo: ["Masculino", "Feminino"],
+    idade: '',
+    sexo: ['Masculino', 'Feminino'],
     hide: false,
-    cid: "",
-    cidHint: "CID",
+    cid: '',
+    cidHint: 'CID',
     hideInformante: false,
     informante: {
-      tipo: "",
-      nome: "",
+      tipo: '',
+      nome: '',
       readonly: true,
       disabled: true,
-      hint: ""
+      hint: '',
     },
-    uf: "AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MG,MS,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO".split(
-      ","
+    uf: 'AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MG,MS,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO'.split(
+      ','
     ),
     fieldValues: {
-      CID: []
+      CID: [],
     },
     Form: Object.values(Form),
-    CID10: Object.values(CID10)
+    CID10: Object.values(CID10),
   }),
   components: {
-    DateDialog: () => import("@/components/DateDialog"),
-    AutoComplete: () => import("@/components/AutoComplete"),
-    FormHeader: () => import("@/components/forms/FormHeader"),
-    CheckList: () => import("@/components/CheckList"),
-    CIDFlex: () => import("@/components/CIDFlex")
+    DateDialog: defineAsyncComponent(() =>
+      import('@/components/DateDialog.vue')
+    ),
+    AutoComplete: defineAsyncComponent(() =>
+      import('@/components/AutoComplete.vue')
+    ),
+    FormHeader: defineAsyncComponent(() =>
+      import('@/components/forms/FormHeader.vue')
+    ),
+    CheckList: defineAsyncComponent(() => import('@/components/CheckList.vue')),
+    CIDFlex: defineAsyncComponent(() => import('@/components/CIDFlex.vue')),
   },
   methods: {
-    ...mapActions(["setInfo", "unlistCID", "refillCID", "fillCID"]),
+    ...mapActions(['setInfo', 'unlistCID', 'refillCID', 'fillCID']),
     calcAge(date) {
-      const splitted = date.split("/");
-      var day = `${parseInt(splitted[0], 10) + 1}`.padStart(2, "0");
-      const month = `${parseInt(splitted[1], 10)}`.padStart(2, "0");
-      const year = `${parseInt(splitted[2], 10)}`.padStart(2, "0");
+      const splitted = date.split('/');
+      var day = `${parseInt(splitted[0], 10) + 1}`.padStart(2, '0');
+      const month = `${parseInt(splitted[1], 10)}`.padStart(2, '0');
+      const year = `${parseInt(splitted[2], 10)}`.padStart(2, '0');
       date = `${year}-${month}-${day++}`;
       var today = new Date();
-      var birthday = new Date(
-        date
-          .split("/")
-          .reverse()
-          .join("-")
-      );
+      var birthday = new Date(date.split('/').reverse().join('-'));
       var age = today.getFullYear() - birthday.getFullYear();
       var m = today.getMonth() - birthday.getMonth();
       if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
         age--;
       }
-      this.idade = isNaN(age) ? "Data inválida" : `${age} anos`;
+      this.idade = isNaN(age) ? 'Data inválida' : `${age} anos`;
       this.fieldValues.age = age;
       this.fieldValues.birthday = birthday.toISOString().substr(0, 10);
       this.updatePrintView();
@@ -255,51 +257,51 @@ export default {
       this.hide = status;
     },
     setInformante(informante) {
-      if (this.$custom.normalize(informante) != "a propria pessoa") {
+      if (this.$custom.normalize(informante) != 'a propria pessoa') {
         this.informante.readonly = false;
         this.informante.disabled = false;
-        this.informante.hint = "Insira o nome do informante";
+        this.informante.hint = 'Insira o nome do informante';
         this.$nextTick(() => this.$refs.informante.focus());
         this.hideInformante = false;
       } else {
         this.hideInformante = true;
         this.informante.readonly = true;
         this.informante.disabled = true;
-        this.informante.hint = "";
-        this.informante.nome = "";
+        this.informante.hint = '';
+        this.informante.nome = '';
       }
       if (this.fieldValues.informant == undefined) {
-        this.fieldValues.informant = { type: "", name: "" };
+        this.fieldValues.informant = { type: '', name: '' };
       }
       this.fieldValues.informant.type = informante;
     },
     blurInformante() {
       if (this.informante.nome.length > 0) {
-        this.informante.hint = "";
+        this.informante.hint = '';
       }
       this.fieldValues.informant.name = this.informante.nome;
     },
-    required: val => [(val || "").length > 0 || "Campo obrigatório!"],
+    required: (val) => [(val || '').length > 0 || 'Campo obrigatório!'],
     addCID() {
       if (
         this.cid.length > 0 &&
-        !this.fieldValues.CID.some(element => {
+        !this.fieldValues.CID.some((element) => {
           return element === this.cid;
         })
       ) {
         this.fieldValues.CID.push(this.cid);
         this.$refs.cid.clear();
         this.unlistCID(this.cid);
-        this.cidHint = "CID";
-        this.cid = "";
+        this.cidHint = 'CID';
+        this.cid = '';
       } else {
         this.$refs.cid.focus();
-        this.cidHint = "Informe o CID";
+        this.cidHint = 'Informe o CID';
       }
       this.updatePrintView();
     },
     delCID(cid) {
-      this.fieldValues.CID = this.fieldValues.CID.filter(element => {
+      this.fieldValues.CID = this.fieldValues.CID.filter((element) => {
         if (element != cid) {
           return element;
         }
@@ -308,25 +310,25 @@ export default {
     },
     updatePrintView() {
       this.setInfo({
-        name: this.fieldValues.name || "",
-        CID: this.fieldValues.CID || "",
-        registry: this.fieldValues.registry || "",
-        sex: this.fieldValues.sex || "",
-        ethnicity: this.fieldValues.ethnicity || "",
-        deficiencyType: this.fieldValues.deficiencyType || "",
-        history: this.fieldValues.history || "",
-        birthday: this.fieldValues.birthday || "",
-        informant: this.fieldValues.informant || "",
-        age: this.fieldValues.age || ""
+        name: this.fieldValues.name || '',
+        CID: this.fieldValues.CID || '',
+        registry: this.fieldValues.registry || '',
+        sex: this.fieldValues.sex || '',
+        ethnicity: this.fieldValues.ethnicity || '',
+        deficiencyType: this.fieldValues.deficiencyType || '',
+        history: this.fieldValues.history || '',
+        birthday: this.fieldValues.birthday || '',
+        informant: this.fieldValues.informant || '',
+        age: this.fieldValues.age || '',
       });
-    }
+    },
   },
   computed: {
-    ...mapGetters(["theme", "personal", "deficiencies"])
+    ...mapGetters(['theme', 'personal', 'deficiencies']),
   },
   created() {
     this.fillCID(CID10.list);
-  }
+  },
 };
 </script>
 

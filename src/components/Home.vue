@@ -30,57 +30,60 @@
       </v-tabs>
     </v-container>
 
-    <v-tabs-items v-model="tab">
-      <v-tab-item>
+    <v-window v-model="tab">
+      <v-window-item>
         <Form1 />
-      </v-tab-item>
-      <v-tab-item>
+      </v-window-item>
+      <v-window-item>
         <Form2 />
-      </v-tab-item>
-      <v-tab-item eager>
+      </v-window-item>
+      <v-window-item eager>
         <Form3 />
-      </v-tab-item>
-      <v-tab-item eager>
+      </v-window-item>
+      <v-window-item eager>
         <Form4 />
-      </v-tab-item>
-    </v-tabs-items>
+      </v-window-item>
+    </v-window>
   </v-card>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
+<script lang="ts">
+import { defineAsyncComponent } from 'vue';
+import { mapGetters } from 'vuex';
 export default {
   components: {
-    Evaluation: () => import("@/components/Evaluation"),
-    TabTitle: () => import("@/components/TabTitle"),
-    Form1: () => import("@/components/forms/Form1"),
-    Form2: () => import("@/components/forms/Form2"),
-    Form3: () => import("@/components/forms/Form3"),
-    Form4: () => import("@/components/forms/Form4")
+    Evaluation: defineAsyncComponent(
+      () => import('@/components/Evaluation.vue')
+    ),
+    TabTitle: defineAsyncComponent(() => import('@/components/TabTitle.vue')),
+    Form1: defineAsyncComponent(() => import('@/components/forms/Form1.vue')),
+    Form2: defineAsyncComponent(() => import('@/components/forms/Form2.vue')),
+    Form3: defineAsyncComponent(() => import('@/components/forms/Form3.vue')),
+    Form4: defineAsyncComponent(() => import('@/components/forms/Form4.vue')),
   },
   data: () => ({
     tab: null,
     tabData: [
       {
-        subtitle: "Identificação do Avaliado e da Avaliação",
-        comment: "Matriz"
+        subtitle: 'Identificação do Avaliado e da Avaliação',
+        comment: 'Matriz',
       },
       {
-        subtitle: "Funções corporais acometidas",
-        comment: "a ser preenchido pelo médico perito"
+        subtitle: 'Funções corporais acometidas',
+        comment: 'a ser preenchido pelo médico perito',
       },
       {
-        subtitle: "Aplicação do Instrumento",
-        comment: "Matriz"
+        subtitle: 'Aplicação do Instrumento',
+        comment: 'Matriz',
       },
       {
-        subtitle: "Aplicação do Modelo Linguístico Fuzzy",
-        comment: ""
-      }
+        subtitle: 'Aplicação do Modelo Linguístico Fuzzy',
+        comment: '',
+      },
     ],
-    eager: [false, false, false]
+    eager: [false, false, false],
   }),
-  computed: mapGetters(["theme"])
+  computed: mapGetters(['theme']),
 };
 </script>
 <style>

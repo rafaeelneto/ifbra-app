@@ -73,7 +73,7 @@
                         column: 'medical',
                         i: i,
                         j: j,
-                        dominio: dominio.Dominio
+                        dominio: dominio.Dominio,
                       }"
                     />
                   </v-col>
@@ -93,7 +93,7 @@
                         column: 'social',
                         i: i,
                         j: j,
-                        dominio: dominio.Dominio
+                        dominio: dominio.Dominio,
                       }"
                     />
                   </v-col>
@@ -111,7 +111,7 @@
                           i: i,
                           j: j,
                           values: $event,
-                          barriers: barreiras
+                          barriers: barreiras,
                         })
                       "
                       :allow-clean="true"
@@ -128,10 +128,11 @@
   </div>
 </template>
 <script>
-import Dominios from "@/assets/json/form3.json";
-import pontuacao from "@/assets/json/inss.json";
-import barreiras from "@/assets/json/barreiras.json";
-import { mapGetters, mapActions } from "vuex";
+import { defineAsyncComponent } from 'vue';
+import Dominios from '@/assets/json/form3.json';
+import pontuacao from '@/assets/json/inss.json';
+import barreiras from '@/assets/json/barreiras.json';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   data: () => ({
     ContentCols: 6,
@@ -140,44 +141,48 @@ export default {
     Dominios: Object.values(Dominios),
     pontuacao: Object.values(pontuacao),
     barreiras: Object.values(barreiras),
-    Barreiras: ["P e T", "Amb", "A e R", "At", "SS e P"],
-    INSS: ["25", "50", "75", "100"],
-    hide: false
+    Barreiras: ['P e T', 'Amb', 'A e R', 'At', 'SS e P'],
+    INSS: ['25', '50', '75', '100'],
+    hide: false,
   }),
   components: {
-    FormHeader: () => import("@/components/forms/FormHeader"),
-    CheckList: () => import("@/components/CheckList"),
-    ScoreItem: () => import("@/components/ScoreItem"),
-    Tooltip: () => import("@/components/Tooltip"),
-    LighterTextField: () => import("@/components/LighterTextField")
+    FormHeader: defineAsyncComponent(() =>
+      import('@/components/forms/FormHeader.vue')
+    ),
+    CheckList: defineAsyncComponent(() => import('@/components/CheckList.vue')),
+    ScoreItem: defineAsyncComponent(() => import('@/components/ScoreItem.vue')),
+    Tooltip: defineAsyncComponent(() => import('@/components/Tooltip.vue')),
+    LighterTextField: defineAsyncComponent(() =>
+      import('@/components/LighterTextField.vue')
+    ),
   },
   methods: {
     ...mapActions([
-      "setScores",
-      "updateScores",
-      "cycleScores",
-      "makeFuzzy",
-      "updateFuzzy",
-      "updateBarrier"
+      'setScores',
+      'updateScores',
+      'cycleScores',
+      'makeFuzzy',
+      'updateFuzzy',
+      'updateBarrier',
     ]),
     LighterTextFields(i, j, subdominio) {
       return subdominio.Detalhe.length == 0
-        ? { Detail: `${i + 1}.${j + 1} ${subdominio.Desc}`, Desc: "" }
+        ? { Detail: `${i + 1}.${j + 1} ${subdominio.Desc}`, Desc: '' }
         : {
             Detail: subdominio.Detalhe,
-            Desc: `${i + 1}.${j + 1} ${subdominio.Desc}`
+            Desc: `${i + 1}.${j + 1} ${subdominio.Desc}`,
           };
     },
     showHide(status) {
       this.hide = status;
-    }
+    },
   },
   computed: {
-    ...mapGetters(["filledStatus", "allScores", "fuzzy", "theme"])
+    ...mapGetters(['filledStatus', 'allScores', 'fuzzy', 'theme']),
   },
   created() {
     this.setScores(Dominios);
-  }
+  },
 };
 </script>
 

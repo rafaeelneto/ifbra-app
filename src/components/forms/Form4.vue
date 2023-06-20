@@ -30,7 +30,7 @@
               <v-row v-for="(deficiencia, i) in Fuzzy" :key="i">
                 <v-col cols="6" md="4">{{ deficiencia.Desc }}</v-col>
                 <v-col cols="6" md="8">
-                  {{ deficiencia.Dominios.join(" e ") }}
+                  {{ deficiencia.Dominios.join(' e ') }}
                 </v-col>
               </v-row>
             </div>
@@ -40,9 +40,7 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" text @click="dialog = false">
-              Ciente
-            </v-btn>
+            <v-btn color="primary" text @click="dialog = false"> Ciente </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -106,13 +104,11 @@
                             :class="`${!theme.dark ? theme.color : ''}`"
                           >
                             <FuzzySwitch
-                              :innerLabel="
-                                `Houve pontuação 25 ou 50 em alguma atividade dos domínios ${formatDomain(
-                                  deficiencia.Dominios
-                                )}; OU Houve pontuação 75 em todas atividade dos domínios ${formatDomain(
-                                  deficiencia.Dominios
-                                )}`
-                              "
+                              :innerLabel="`Houve pontuação 25 ou 50 em alguma atividade dos domínios ${formatDomain(
+                                deficiencia.Dominios
+                              )}; OU Houve pontuação 75 em todas atividade dos domínios ${formatDomain(
+                                deficiencia.Dominios
+                              )}`"
                               :read-only="true"
                               :deficiency-type="deficiencia.Type"
                               :dominios="deficiencia.Dominios"
@@ -127,13 +123,11 @@
                                 <v-card
                                   flat
                                   class="pad-me"
-                                  :color="
-                                    `${
-                                      !theme.dark
-                                        ? 'blue-grey ligthen-4'
-                                        : 'blue-grey darken-2'
-                                    }`
-                                  "
+                                  :color="`${
+                                    !theme.dark
+                                      ? 'blue-grey ligthen-4'
+                                      : 'blue-grey darken-2'
+                                  }`"
                                 >
                                   Campo preenchido automaticamente.
                                 </v-card>
@@ -155,8 +149,9 @@
 </template>
 
 <script>
-import Fuzzy from "@/assets/json/form4.json";
-import { mapActions, mapGetters } from "vuex";
+import { defineAsyncComponent } from 'vue';
+import Fuzzy from '@/assets/json/form4.json';
+import { mapActions, mapGetters } from 'vuex';
 export default {
   data: () => ({
     Fuzzy: Object.values(Fuzzy),
@@ -166,15 +161,15 @@ export default {
     openDialog: true,
     overlay: false,
     width: window.innerWidth,
-    printFuzzy: {}
+    printFuzzy: {},
   }),
   components: {
-    FuzzySwitch: () => import("@/components/FuzzySwitch"),
-    LighterTextField: () => import("@/components/LighterTextField"),
-    FormHeader: () => import("@/components/forms/FormHeader")
+    FuzzySwitch: () => import('@/components/FuzzySwitch.vue'),
+    LighterTextField: () => import('@/components/LighterTextField.vue'),
+    FormHeader: () => import('@/components/forms/FormHeader.vue'),
   },
   computed: {
-    ...mapGetters(["fuzzy", "theme", "allScores", "personal","fuzzyType"])
+    ...mapGetters(['fuzzy', 'theme', 'allScores', 'personal', 'fuzzyType']),
   },
   methods: {
     showHide(status) {
@@ -190,17 +185,20 @@ export default {
       if (
         this.printFuzzy[i].severe &&
         this.printFuzzy[i].needAid &&
-        this.personal.deficiencyType.some(el1 => {
-          return deficiency.Type === this.$custom.normalize(el1).toLowerCase().split(" ou ")[0];
+        this.personal.deficiencyType.some((el1) => {
+          return (
+            deficiency.Type ===
+            this.$custom.normalize(el1).toLowerCase().split(' ou ')[0]
+          );
         }) &&
         this.fuzzyType[deficiency.Type]
       ) {
         this.dialog = true;
         this.fuzzyfy({
           dominios: deficiency.Dominios,
-          normalize: this.$custom.normalize
+          normalize: this.$custom.normalize,
         });
-        this.$eventHub.$emit("fuzzyfy", deficiency.Dominios);
+        this.$eventHub.$emit('fuzzyfy', deficiency.Dominios);
       }
     },
     updatePrint(i) {
@@ -211,26 +209,26 @@ export default {
         .reduce(
           (out, el) => [
             ...out,
-            this.$custom.normalize(el) === "socializacao"
-              ? "Socialização e Vida Comunitária"
-              : el
+            this.$custom.normalize(el) === 'socializacao'
+              ? 'Socialização e Vida Comunitária'
+              : el,
           ],
           []
         )
-        .join(" ou ");
+        .join(' ou ');
     },
     overTheLay() {
       this.overlay = !this.overlay;
-      this.$eventHub.$emit("force-blur");
+      this.$eventHub.$emit('force-blur');
     },
     setWidth: () => (this.width = window.innerWidth),
     ...mapActions([
-      "makePrintFuzzy",
-      "makeFuzzyType",
-      "updatePrintFuzzy",
-      "makeFuzzy",
-      "fuzzyfy"
-    ])
+      'makePrintFuzzy',
+      'makeFuzzyType',
+      'updatePrintFuzzy',
+      'makeFuzzy',
+      'fuzzyfy',
+    ]),
   },
   watch: {
     overlay() {
@@ -239,19 +237,19 @@ export default {
           this.overlay = false;
         }, 2000);
       }
-    }
+    },
   },
   created() {
-    this.$eventHub.$emit("score");
+    this.$eventHub.$emit('score');
     this.makePrintFuzzy(Fuzzy);
     this.setFuzzySwitch();
     this.makeFuzzy({
       scores: this.allScores,
       Fuzzy,
-      normalize: this.$custom.normalize
+      normalize: this.$custom.normalize,
     });
-    this.makeFuzzyType(Fuzzy)
-  }
+    this.makeFuzzyType(Fuzzy);
+  },
 };
 </script>
 

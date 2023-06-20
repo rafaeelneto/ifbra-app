@@ -27,10 +27,8 @@
           no-gutters
           v-for="(subfuncao, j) in funcao.SubFuncao"
           :key="j"
-          :class="
-            `d-flex align-center flex-row pad-me
-            ${theme.dark ? '' : theme.color}`
-          "
+          :class="`d-flex align-center flex-row pad-me
+            ${theme.dark ? '' : theme.color}`"
           hover
           @click="switchRow({ i, j })"
         >
@@ -54,20 +52,25 @@
   </div>
 </template>
 <script>
-import Funcoes from "@/assets/json/form2.json";
-import { mapActions, mapGetters } from "vuex";
+import { defineAsyncComponent } from 'vue';
+import Funcoes from '@/assets/json/form2.json';
+import { mapActions, mapGetters } from 'vuex';
 export default {
   data: () => ({
     funcoes: Object.values(Funcoes),
-    width: 0
+    width: 0,
   }),
   components: {
-    LighterTextField: () => import("@/components/LighterTextField"),
-    RowSwitch: () => import("@/components/RowSwitch"),
-    FormHeader: () => import("@/components/forms/FormHeader")
+    LighterTextField: defineAsyncComponent(() =>
+      import('@/components/LighterTextField.vue')
+    ),
+    RowSwitch: defineAsyncComponent(() => import('@/components/RowSwitch.vue')),
+    FormHeader: defineAsyncComponent(() =>
+      import('@/components/forms/FormHeader.vue')
+    ),
   },
   mounted() {
-    this.$eventHub.$on("resize", this.setWidth);
+    this.$eventHub.$on('resize', this.setWidth);
   },
   methods: {
     setWidth() {
@@ -77,15 +80,15 @@ export default {
       const ref = `row-${i}-${j}`.toString();
       this.$refs[ref][0].innerChange();
       this.updateSubFunction({ i: i, j: j });
-      this.$eventHub.$emit("force-blur");
+      this.$eventHub.$emit('force-blur');
     },
-    ...mapActions(["setFunctions", "updateSubFunction"])
+    ...mapActions(['setFunctions', 'updateSubFunction']),
   },
   created() {
     this.setWidth();
     this.setFunctions(this.funcoes);
   },
-  computed: mapGetters(["theme", "bodyFunctions"])
+  computed: mapGetters(['theme', 'bodyFunctions']),
 };
 </script>
 

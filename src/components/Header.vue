@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <v-card>
-      <v-app-bar
+  <v-card>
+    <p style="color: red">omnmfdoijasnfijdas</p>
+    <!-- <v-app-bar
         tile
         fixed
         :dense="this.width < 960"
@@ -16,13 +16,11 @@
         <div class="hidden-sm-and-down">
           <v-btn
             depressed
-            :active-class="
-              `${
-                theme.dark
-                  ? 'deep-purple--text text--accent-4'
-                  : 'blue--text text--accent-4'
-              }`
-            "
+            :active-class="`${
+              theme.dark
+                ? 'deep-purple--text text--accent-4'
+                : 'blue--text text--accent-4'
+            }`"
             :class="`${!theme.dark ? 'blue--text text--accent-4' : ''}`"
             v-for="(item, i) in menu"
             :key="i"
@@ -63,10 +61,10 @@
               <Theme />
             </v-card>
           </v-card>
-        </v-item-group>
-      </v-app-bar>
+        </v-item-group> 
+      </v-app-bar>-->
 
-      <v-navigation-drawer v-model="drawer" height="400" absolute temporary>
+    <!-- <v-navigation-drawer v-model="drawer" height="400" absolute temporary>
         <v-list nav dense>
           <v-list-item-group active-class="deep-purple--text text--accent-4">
             <v-list-item v-for="(item, i) in menu" :key="i" :to="item[1]">
@@ -74,50 +72,55 @@
             </v-list-item>
           </v-list-item-group>
         </v-list>
-      </v-navigation-drawer>
-    </v-card>
-    <div class="filler" :class="`${!theme.dark ? theme.color : ''}`" />
-  </div>
+      </v-navigation-drawer> -->
+  </v-card>
+  <!-- <div class="filler" :class="`${!theme.dark ? theme.color : ''}`" /> -->
 </template>
 
-<script>
-import { mapActions, mapGetters } from "vuex";
+<script lang="ts">
+import { mapActions, mapGetters } from 'vuex';
+
+import Theme from '@/components/Theme.vue';
+import PrivacyAlert from '@/components/PrivacyAlert.vue';
+import ReportDialog from '@/components/ReportDialog.vue';
+
 export default {
+  name: 'AppHeader',
   data: () => ({
     drawer: false,
     menu: [
-      ["Formulários", "/"],
-      ["Informações", "info"],
-      ["Privacidade", "lgpd"],
-      ["Contribua", "apoio"]
+      ['Formulários', '/'],
+      ['Informações', 'info'],
+      ['Privacidade', 'lgpd'],
+      ['Contribua', 'apoio'],
     ],
-    width: 0
+    width: 0,
   }),
   components: {
-    Theme: () => import("@/components/Theme"),
-    PrivacyAlert: () => import("@/components/PrivacyAlert"),
-    ReportDialog: () => import("@/components/ReportDialog")
+    Theme,
+    PrivacyAlert,
+    ReportDialog,
   },
-  computed: mapGetters(["theme"]),
+  computed: mapGetters(['theme']),
   mounted() {
-    this.$eventHub.$on("resize", this.setWidth);
+    // this.$eventHub.$on('resize', this.setWidth);
   },
   methods: {
-    ...mapActions(["updatePrintView"]),
+    ...mapActions(['updatePrintView']),
     setWidth() {
       this.width = window.innerWidth;
     },
     showPrintView() {
-      this.$eventHub.$emit("update-printview");
-      this.updatePrintView();
-      this.$eventHub.$emit("force-blur");
-    }
-  }
+      // this.$eventHub.$emit('update-printview');
+      // this.updatePrintView();
+      // this.$eventHub.$emit('force-blur');
+    },
+  },
 };
 </script>
 
 <style scoped>
-.title {
+/* .title {
   padding: 1rem;
 }
 .filler {
@@ -131,5 +134,5 @@ export default {
 }
 .white-bg {
   background-color: white;
-}
+} */
 </style>
