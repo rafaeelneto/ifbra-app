@@ -48,42 +48,50 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent } from 'vue';
-import { mapGetters } from 'vuex';
+import { defineAsyncComponent } from "vue";
+import { mapGetters } from "vuex";
+
+import Evaluation from "@/components/Evaluation.vue";
+import TabTitle from "@/components/TabTitle.vue";
+import Form1 from "@/components/forms/Form1.vue";
+import Form2 from "@/components/forms/Form2.vue";
+import Form3 from "@/components/forms/Form3.vue";
+import Form4 from "@/components/forms/Form4.vue";
+
 export default {
   components: {
-    Evaluation: defineAsyncComponent(
-      () => import('@/components/Evaluation.vue')
-    ),
-    TabTitle: defineAsyncComponent(() => import('@/components/TabTitle.vue')),
-    Form1: defineAsyncComponent(() => import('@/components/forms/Form1.vue')),
-    Form2: defineAsyncComponent(() => import('@/components/forms/Form2.vue')),
-    Form3: defineAsyncComponent(() => import('@/components/forms/Form3.vue')),
-    Form4: defineAsyncComponent(() => import('@/components/forms/Form4.vue')),
+    Evaluation,
+    TabTitle,
+    Form1,
+    Form2,
+    Form3,
+    Form4,
   },
-  data: () => ({
-    tab: null,
-    tabData: [
-      {
-        subtitle: 'Identificação do Avaliado e da Avaliação',
-        comment: 'Matriz',
-      },
-      {
-        subtitle: 'Funções corporais acometidas',
-        comment: 'a ser preenchido pelo médico perito',
-      },
-      {
-        subtitle: 'Aplicação do Instrumento',
-        comment: 'Matriz',
-      },
-      {
-        subtitle: 'Aplicação do Modelo Linguístico Fuzzy',
-        comment: '',
-      },
-    ],
-    eager: [false, false, false],
-  }),
-  computed: mapGetters(['theme']),
+  data() {
+    return {
+      tab: null,
+      tabData: [
+        {
+          subtitle: "Identificação do Avaliado e da Avaliação",
+          comment: "Matriz",
+        },
+        {
+          subtitle: "Funções corporais acometidas",
+          comment: "a ser preenchido pelo médico perito",
+        },
+        {
+          subtitle: "Aplicação do Instrumento",
+          comment: "Matriz",
+        },
+        {
+          subtitle: "Aplicação do Modelo Linguístico Fuzzy",
+          comment: "",
+        },
+      ],
+      eager: [false, false, false],
+    };
+  },
+  computed: mapGetters(["theme"]),
 };
 </script>
 <style>

@@ -1,12 +1,10 @@
 <template>
   <v-card class="print-hidden hidden-print-only" flat tile>
-    <v-toolbar flat dense class="primary">
+    <v-toolbar flat density="compact" class="primary">
       <v-toolbar-title class="hidden-sm-and-down">
         Visualizar Impressão
       </v-toolbar-title>
-      <v-toolbar-title class="hidden-md-and-up">
-        Impressão
-      </v-toolbar-title>
+      <v-toolbar-title class="hidden-md-and-up"> Impressão </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
       <v-btn class="hidden-sm-and-down" @click="dialog = true">
@@ -20,9 +18,7 @@
       </v-btn>
       <v-dialog v-model="dialog" width="50%" class="print-hidden">
         <v-card class="print-hidden">
-          <v-card-title class="headline">
-            Contribua
-          </v-card-title>
+          <v-card-title class="headline"> Contribua </v-card-title>
           <v-card-text>
             Se esse formulário poupou seu tempo considere contribuir com sua
             manutenção.
@@ -62,8 +58,8 @@ export default {
           window.location.href = "#/apoio";
         }
       }, 200);
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

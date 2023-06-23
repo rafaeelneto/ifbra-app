@@ -28,17 +28,20 @@
 
 <script>
 import { mapGetters } from "vuex";
+
+import LighterTextField from "@/components/LighterTextField.vue";
+
 export default {
   components: {
-    LighterTextField: () => import("@/components/LighterTextField")
+    LighterTextField,
   },
   computed: mapGetters(["totalScore", "degree", "theme"]),
   methods: {
     upperFirst(val) {
       if (typeof val !== "string") return undefined;
       return val.charAt(0).toUpperCase() + val.slice(1);
-    }
-  }
+    },
+  },
 };
 </script>
 

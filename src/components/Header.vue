@@ -1,26 +1,20 @@
 <template>
   <div>
-    <v-app-bar
-      tile
-      fixed
-      :density="width < 960 ? 'compact' : 'default'"
-      :class="`${!theme.dark ? 'light-blue darken-3' : ''}`"
-      theme="dark"
-    >
-      <div class="hidden-md-and-up">
-        <v-btn @click="drawer = true" tile small depressed text>
-          <v-icon>mdi-menu</v-icon>
-        </v-btn>
-      </div>
-      <v-toolbar-title class="title">IFBr-A</v-toolbar-title>
-      <div class="hidden-sm-and-down">
-        <router-link
-          v-for="(item, i) in menu"
-          :key="i"
-          :to="item[1]"
-          custom
-          class="margin"
-        >
+    <v-card>
+      <v-app-bar
+        tile
+        fixed
+        :density="width < 960 ? 'compact' : 'default'"
+        :class="`${!theme.dark ? 'bg-light-blue-darken-3' : ''}`"
+        theme="dark"
+      >
+        <div class="hidden-md-and-up">
+          <v-btn @click="drawer = true" tile small depressed>
+            <v-icon>mdi-menu</v-icon>
+          </v-btn>
+        </div>
+        <v-toolbar-title class="title">IFBr-A</v-toolbar-title>
+        <div class="hidden-sm-and-down">
           <v-btn
             depressed
             :active-class="`${
@@ -29,63 +23,74 @@
                 : 'blue--text text--accent-4'
             }`"
             :class="`${!theme.dark ? 'blue--text text--accent-4' : ''}`"
+            v-for="(item, i) in menu"
+            :key="i"
+            :to="item[1]"
+            class="margin"
             tile
           >
             {{ item[0] }}
           </v-btn>
-        </router-link>
-      </div>
-      <v-spacer />
-      <ReportDialog />
-      <PrivacyAlert />
-      <v-item-group>
-        <div class="hidden-md-and-up">
-          <v-btn
-            :class="`${theme.dark ? 'black-bg' : 'white-bg'}`"
-            text
-            tile
-            small
-          >
-            <v-icon @click="showPrintView()">mdi-printer</v-icon>
-          </v-btn>
         </div>
-        <div class="hidden-sm-and-down">
-          <v-btn :class="`${theme.dark ? 'black-bg' : 'white-bg'}`" text tile>
-            <v-icon @click="showPrintView()">mdi-printer</v-icon>
-          </v-btn>
-        </div>
-        <Theme />
-      </v-item-group>
-    </v-app-bar>
+        <v-spacer />
+        <ReportDialog />
+        <PrivacyAlert />
+        <v-item-group>
+          <v-card class="d-flex flex-row align-center">
+            <v-card flat tile>
+              <div class="hidden-md-and-up">
+                <v-btn
+                  :class="`${theme.dark ? 'bg-black' : 'bg-white'}`"
+                  tile
+                  small
+                >
+                  <v-icon @click="showPrintView()">mdi-printer</v-icon>
+                </v-btn>
+              </div>
+              <div class="hidden-sm-and-down">
+                <v-btn :class="`${theme.dark ? 'bg-black' : 'bg-white'}`" tile>
+                  <v-icon @click="showPrintView()">mdi-printer</v-icon>
+                </v-btn>
+              </div>
+            </v-card>
+            <v-card>
+              <Theme />
+            </v-card>
+          </v-card>
+        </v-item-group>
+      </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary>
-      <v-list nav :density="width < 960 ? 'compact' : 'default'">
-        <v-list-item-group active-class="deep-purple--text text--accent-4">
-          <v-list-item v-for="(item, i) in menu" :key="i" :to="item[1]">
-            <v-list-item-title>{{ item[0] }}</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
+      <v-navigation-drawer v-model="drawer" absolute temporary>
+        <v-list nav :density="width < 960 ? 'compact' : 'default'">
+          <v-list-group active-class="deep-purple--text text--accent-4">
+            <v-list-item v-for="(item, i) in menu" :key="i" :to="item[1]">
+              <v-list-item-title>{{ item[0] }}</v-list-item-title>
+            </v-list-item>
+          </v-list-group>
+        </v-list>
+      </v-navigation-drawer>
+    </v-card>
+    <div class="filler" :class="`${!theme.dark ? theme.color : ''}`" />
   </div>
 </template>
 
 <script lang="ts">
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from "vuex";
+import eventBus from "@/utils/eventBus";
 
-import Theme from '@/components/Theme.vue';
-import PrivacyAlert from '@/components/PrivacyAlert.vue';
-import ReportDialog from '@/components/ReportDialog.vue';
+import Theme from "@/components/Theme.vue";
+import PrivacyAlert from "@/components/PrivacyAlert.vue";
+import ReportDialog from "@/components/ReportDialog.vue";
 
 export default {
-  name: 'AppHeader',
+  name: "AppHeader",
   data: () => ({
     drawer: false,
     menu: [
-      ['Formulários', '/'],
-      ['Informações', 'info'],
-      ['Privacidade', 'lgpd'],
-      ['Contribua', 'apoio'],
+      ["Formulários", "/"],
+      ["Informações", "info"],
+      ["Privacidade", "lgpd"],
+      ["Contribua", "apoio"],
     ],
     width: 0,
   }),
@@ -94,20 +99,23 @@ export default {
     PrivacyAlert,
     ReportDialog,
   },
-  computed: mapGetters(['theme']),
+  computed: mapGetters(["theme"]),
   mounted() {
-    this.$eventHub.$on('resize', this.setWidth);
+    eventBus.on("resize", this.setWidth);
   },
   methods: {
-    ...mapActions(['updatePrintView']),
+    ...mapActions(["updatePrintView"]),
     setWidth() {
       this.width = window.innerWidth;
     },
     showPrintView() {
-      this.$eventHub.$emit('update-printview');
+      eventBus.emit("update-printview");
       this.updatePrintView();
-      this.$eventHub.$emit('force-blur');
+      eventBus.emit("force-blur");
     },
+  },
+  beforeUnmount() {
+    eventBus.off("resize", this.setWidth);
   },
 };
 </script>

@@ -32,7 +32,18 @@
 </template>
 
 <script lang="ts">
-import { mapActions, mapGetters } from 'vuex';
+import eventBus from "@/utils/eventBus";
+import { mapActions, mapGetters } from "vuex";
+
+import PrintBar from "@/components/print/PrintBar.vue";
+import Form1 from "@/components/print/Form1.vue";
+import Form2 from "@/components/print/Form2.vue";
+import Form3 from "@/components/print/Form3.vue";
+import Form4 from "@/components/print/Form4.vue";
+import MiniReport from "@/components/print/MiniReport.vue";
+import ClassificationBoard from "@/components/print/ClassificationBoard.vue";
+import Report from "@/components/Report.vue";
+
 export default {
   data: () => ({
     dialog: false,
@@ -41,40 +52,39 @@ export default {
     widgets: false,
   }),
   methods: {
-    ...mapActions(['updatePrintView']),
+    ...mapActions(["updatePrintView"]),
     close() {
       this.updatePrintView();
-      this.$eventHub.$emit('force-blur');
+      eventBus.emit("force-blur");
     },
     firstLast(name) {
-      name = (name || '').length > 0 || 'nome';
-      let arr = name.split(' ');
-      return arr.length > 1 ? [arr[0], arr[arr.length - 1]].join('_') : name;
+      name = (name || "").length > 0 || "nome";
+      let arr = name.split(" ");
+      return arr.length > 1 ? [arr[0], arr[arr.length - 1]].join("_") : name;
     },
   },
   computed: mapGetters([
-    'personal',
-    'allEvaluators',
-    'evalDate',
-    'bodyFunctions',
-    'allScores',
-    'theme',
-    'fuzzy',
-    'printView',
+    "personal",
+    "allEvaluators",
+    "evalDate",
+    "bodyFunctions",
+    "allScores",
+    "theme",
+    "fuzzy",
+    "printView",
   ]),
   components: {
-    PrintBar: () => import('@/components/print/PrintBar.vue'),
-    Form1: () => import('@/components/print/Form1.vue'),
-    Form2: () => import('@/components/print/Form2.vue'),
-    Form3: () => import('@/components/print/Form3.vue'),
-    Form4: () => import('@/components/print/Form4.vue'),
-    MiniReport: () => import('@/components/print/MiniReport.vue'),
-    ClassificationBoard: () =>
-      import('@/components/print/ClassificationBoard.vue'),
-    Report: () => import('@/components/Report.vue'),
+    PrintBar,
+    Form1,
+    Form2,
+    Form3,
+    Form4,
+    MiniReport,
+    ClassificationBoard,
+    Report,
   },
   mounted() {
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener("keydown", (e) => {
       if (e.keyCode == 27 && this.printView) {
         this.close();
       }

@@ -7,12 +7,7 @@
     <v-row>
       <v-col v-if="allEvaluators.length > 0">
         Data da Avaliação:
-        {{
-          evalDate
-            .split("-")
-            .reverse()
-            .join("/")
-        }}
+        {{ evalDate.split("-").reverse().join("/") }}
       </v-col>
     </v-row>
     <v-row v-for="evaluator in allEvaluators" :key="evaluator.id">
@@ -42,10 +37,7 @@
         Nascimento:
         {{
           this.personal.birthday.length > 0
-            ? this.personal.birthday
-                .split("-")
-                .reverse()
-                .join("/")
+            ? this.personal.birthday.split("-").reverse().join("/")
             : ""
         }}
       </v-col>
@@ -76,12 +68,16 @@
 
 <script>
 import { mapGetters } from "vuex";
+
+import LighterTextField from "@/components/LighterTextField.vue";
+import EmptyFormAlert from "@/components/print/EmptyFormAlert.vue";
+
 export default {
   components: {
-    LighterTextField: () => import("@/components/LighterTextField"),
-    EmptyFormAlert: () => import("@/components/print/EmptyFormAlert")
+    LighterTextField,
+    EmptyFormAlert,
   },
-  computed: mapGetters(["evalDate", "personal", "allEvaluators"])
+  computed: mapGetters(["evalDate", "personal", "allEvaluators"]),
 };
 </script>
 

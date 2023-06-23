@@ -20,9 +20,9 @@
         <!-- severity -->
         <v-card
           flat
-          :class="
-            `${theme.dark ? '' : theme.color} d-flex justiy-start align-start`
-          "
+          :class="`${
+            theme.dark ? '' : theme.color
+          } d-flex justiy-start align-start`"
         >
           <v-card
             flat
@@ -75,7 +75,7 @@
                 ...out,
                 normalize(el) === "socializacao"
                   ? "Socialização e Vida Comunitária"
-                  : el
+                  : el,
               ],
               []
             ).join(
@@ -85,7 +85,7 @@
                 ...out,
                 normalize(el) === "socializacao"
                   ? "Socialização e Vida Comunitária"
-                  : el
+                  : el,
               ],
               []
             ).join(" ou ")}`
@@ -98,38 +98,45 @@
 
 <script>
 import { mapGetters } from "vuex";
+import LighterTextField from "@/components/LighterTextField.vue";
+import EmptyFormAlert from "@/components/print/EmptyFormAlert.vue";
+import eventBus from "@/utils/eventBus";
+
 export default {
-  data: () => ({
-    fuzzySwitch: [false, false, false, false]
-  }),
+  data() {
+    return {
+      fuzzySwitch: [false, false, false, false],
+    };
+  },
   computed: mapGetters(["fuzzy", "printFuzzy", "theme"]),
   components: {
-    LighterTextField: () => import("@/components/LighterTextField"),
-    EmptyFormAlert: () => import("@/components/print/EmptyFormAlert")
+    LighterTextField,
+    EmptyFormAlert,
   },
   methods: {
     setDomains() {
       this.fuzzySwitch = this.printFuzzy.reduce(
         (out1, el1) => [
           ...out1,
-          el1.Dominios.some(domain =>
+          el1.Dominios.some((domain) =>
             this.fuzzy.some(
-              fuzzy =>
+              (fuzzy) =>
                 fuzzy.Dominio === this.$custom.normalize(domain) && fuzzy.switch
             )
-          )
+          ),
         ],
         []
       );
     },
-    checkBox: check =>
-      check ? "mdi-checkbox-marked" : "mdi-checkbox-blank-outline"
+    checkBox(check) {
+      return check ? "mdi-checkbox-marked" : "mdi-checkbox-blank-outline";
+    },
   },
   created() {
-    this.$eventHub.$on("score", this.setDomains);
+    eventBus.on("score", this.setDomains);
     this.setDomains();
     this.normalize = this.$custom.normalize;
-  }
+  },
 };
 </script>
 

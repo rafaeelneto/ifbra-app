@@ -30,21 +30,23 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+
+import Disclaimer from "@/components/Disclaimer.vue";
+
 export default {
   data: () => ({
-    dialog: false
+    dialog: false,
   }),
   components: {
-    Disclaimer: () => import("@/components/Disclaimer")
+    Disclaimer,
   },
-  created() {
-    this.dialog = true;
-  },
+  // created() {
+  //   this.dialog = false;
+  // },
   computed: {
-    ...mapGetters(["theme"])
-  }
+    ...mapGetters(["theme"]),
+  },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

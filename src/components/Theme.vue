@@ -22,21 +22,23 @@
 
 <script>
 import { mapGetters } from "vuex";
+import eventBus from "@/utils/eventBus";
+
 export default {
   methods: {
     setTheme() {
-      this.$eventHub.$emit("force-blur");
+      eventBus.emit("force-blur");
       this.theme.dark = !this.theme.dark;
-      this.$eventHub.$emit("theme");
-    }
+      eventBus.emit("theme");
+    },
   },
   computed: {
-    ...mapGetters(["theme"])
+    ...mapGetters(["theme"]),
   },
   mounted() {
     if (this.$route.query.dark) {
       this.setTheme();
     }
-  }
+  },
 };
 </script>

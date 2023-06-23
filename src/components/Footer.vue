@@ -1,18 +1,16 @@
 <template>
   <v-footer
     padless
-    :class="
-      `d-flex justify-center align-center ${!theme.dark ? theme.color : ''}`
-    "
+    :class="`d-flex justify-center align-center ${
+      !theme.dark ? theme.color : ''
+    }`"
   >
     <v-card
-      :class="
-        `d-flex
+      :class="`d-flex
         justify-center align-center
         ${!theme.dark ? theme.color : ''}
         ${width < 960 ? 'flex-column' : 'flex-row'}
-        `
-      "
+        `"
       cols="12"
       width="100%"
       flat
@@ -22,11 +20,9 @@
         height="3rem"
         flat
         tile
-        :class="
-          `d-flex text-center align-center right-pad
+        :class="`d-flex text-center align-center right-pad
           ${!theme.dark ? theme.color : ''}
-          `
-        "
+          `"
       >
         {{ new Date().getFullYear() }}
       </v-card>
@@ -34,11 +30,9 @@
         height="3rem"
         flat
         tile
-        :class="
-          `d-flex text-center align-center right-pad
+        :class="`d-flex text-center align-center right-pad
           ${!theme.dark ? theme.color : ''}
-          `
-        "
+          `"
       >
         <v-icon class="hidden-sm-and-down">mdi-ray-vertex</v-icon>
       </v-card>
@@ -46,11 +40,9 @@
         height="3rem"
         flat
         tile
-        :class="
-          `d-flex text-center align-center right-pad
+        :class="`d-flex text-center align-center right-pad
           ${!theme.dark ? theme.color : ''}
-          `
-        "
+          `"
       >
         <span class="right-pad">Desenvolvido por</span>
         <a href="https://www.linkedin.com/in/hugo-virgilio/">
@@ -64,11 +56,9 @@
         height="3rem"
         flat
         tile
-        :class="
-          `d-flex text-center align-center right-pad
+        :class="`d-flex text-center align-center right-pad
           ${!theme.dark ? theme.color : ''}
-          `
-        "
+          `"
       >
         <v-icon class="hidden-sm-and-down">mdi-ray-vertex</v-icon>
       </v-card>
@@ -78,9 +68,7 @@
         tile
         :class="`d-flex align-center ${!theme.dark ? theme.color : ''}`"
       >
-        <a href="https://github.com/ozzono/ifbra-app">
-          Código aberto&nbsp;
-        </a>
+        <a href="https://github.com/ozzono/ifbra-app"> Código aberto&nbsp; </a>
         <a href="https://github.com/ozzono/ifbra-app">
           <v-icon dense>mdi-github-circle</v-icon>
         </a>
@@ -91,20 +79,21 @@
 
 <script>
 import { mapGetters } from "vuex";
+import eventBus from "@/utils/eventBus";
 export default {
   data: () => ({
-    width: "flex-column"
+    width: "flex-column",
   }),
   name: "VuetifyFooter",
   computed: mapGetters(["theme"]),
   methods: {
     setWidth() {
       this.width = window.innerWidth;
-    }
+    },
   },
   mounted() {
-    this.$eventHub.$on("resize", this.setWidth);
-  }
+    eventBus.on("resize", this.setWidth);
+  },
 };
 </script>
 

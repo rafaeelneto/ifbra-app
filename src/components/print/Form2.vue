@@ -28,11 +28,9 @@
           <v-card
             flat
             tile
-            :class="
-              `d-flex text-center align-center d-none left-pad ${
-                theme.dark ? '' : theme.color
-              }`
-            "
+            :class="`d-flex text-center align-center d-none left-pad ${
+              theme.dark ? '' : theme.color
+            }`"
           >
             <p v-if="subFunction.checked">
               <v-icon x-large>mdi-checkbox-marked</v-icon>
@@ -57,12 +55,17 @@
 
 <script>
 import { mapGetters } from "vuex";
+import LighterTextField from "@/components/LighterTextField.vue";
+import EmptyFormAlert from "@/components/print/EmptyFormAlert.vue";
+
 export default {
-  computed: mapGetters(["bodyFunctions", "theme"]),
   components: {
-    LighterTextField: () => import("@/components/LighterTextField"),
-    EmptyFormAlert: () => import("@/components/print/EmptyFormAlert")
-  }
+    LighterTextField,
+    EmptyFormAlert,
+  },
+  computed: {
+    ...mapGetters(["bodyFunctions", "theme"]),
+  },
 };
 </script>
 

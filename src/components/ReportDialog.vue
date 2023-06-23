@@ -1,14 +1,14 @@
 <template>
   <div :class="`text-center ${filledStatus ? '' : 'd-none'}`">
     <v-dialog v-model="dialog" width="700">
-      <template v-slot:activator="{ on, attrs }">
+      <template v-slot:trigger="{ isActive, props }">
         <v-btn
           class="hidden-sm-and-down"
           tile
           color="green lighten-2"
           dark
-          v-bind="attrs"
-          v-on="on"
+          v-bind="props"
+          @click="isActive = !isActive"
         >
           Resumo do Índice
         </v-btn>
@@ -17,8 +17,8 @@
           tile
           color="green lighten-2"
           dark
-          v-bind="attrs"
-          v-on="on"
+          v-bind="props"
+          @click="isActive = !isActive"
           text
         >
           <v-icon>mdi-view-dashboard</v-icon>
@@ -33,20 +33,30 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import eventBus from "@/utils/eventBus";
+
+import Report from "@/components/Report.vue";
+
 export default {
   data: () => ({
     dialog: false,
-    control: true
+    control: true,
   }),
-  components: { Report: () => import("@/components/Report") },
+  components: { Report },
   computed: mapGetters(["filledStatus"]),
-  created() {
-    this.$eventHub.$on("filled", () => {
+  methods: {
+    showDialog() {
       if (this.control) {
         this.dialog = true;
         this.control = false;
       }
-    });
-  }
+    },
+  },
+  created() {
+    eventBus.on("filled", this.showDialog);
+  },
+  beforeUnmount() {
+    eventBus.off("filled", this.showDialog);
+  },
 };
 </script>

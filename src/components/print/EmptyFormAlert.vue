@@ -19,11 +19,13 @@
 
 <script>
 import { mapGetters } from "vuex";
+import LighterTextField from "@/components/LighterTextField.vue";
+
 export default {
   props: ["text", "show"],
   computed: mapGetters(["bodyFunctions", "theme"]),
   components: {
-    LighterTextField: () => import("@/components/LighterTextField")
-  }
+    LighterTextField,
+  },
 };
 </script>

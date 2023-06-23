@@ -1,7 +1,7 @@
 <template>
   <v-container class="print-hidden scroll-y">
     <v-layout align-center justify-center>
-      <v-flex>
+      <div class="d-flex">
         <v-btn
           v-scroll="onScroll"
           v-show="fab"
@@ -17,15 +17,17 @@
         >
           <v-icon>mdi-arrow-up-bold</v-icon>
         </v-btn>
-      </v-flex>
+      </div>
     </v-layout>
   </v-container>
 </template>
 
 <script>
+import eventBus from "@/utils/eventBus";
+
 export default {
   data: () => ({
-    fab: false
+    fab: false,
   }),
 
   methods: {
@@ -36,8 +38,8 @@ export default {
     },
     toTop() {
       this.$vuetify.goTo(0);
-      this.$eventHub.$emit("force-blur");
-    }
-  }
+      eventBus.emit("force-blur");
+    },
+  },
 };
 </script>
