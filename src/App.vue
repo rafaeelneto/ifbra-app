@@ -1,13 +1,15 @@
 <template>
   <v-app id="app">
-    <!-- <PrintView /> -->
-    <!-- <ScrollTop /> -->
+    <PrintView />
+    <ScrollTop />
     <AppHeader></AppHeader>
-    <h1>TITULO TESTE</h1>
-    <!-- <div :class="{ 'd-none': printView }"> -->
-    <!-- <router-view />
-      <Footer /> -->
-    <!-- </div> -->
+    <v-main>
+      <div :class="{ 'd-none': printView }">
+        <h1>TITULO TESTE</h1>
+        <router-view />
+        <Footer />
+      </div>
+    </v-main>
   </v-app>
 </template>
 
