@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <PrintView />
+    <PrintView v-if="printView" />
     <ScrollTop />
     <template v-if="!printView">
       <AppHeader></AppHeader>
@@ -14,7 +14,6 @@
 
 <script lang="ts">
 /* eslint-disable no-console */
-import { defineAsyncComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
 import eventBus from "@/utils/eventBus";
 
@@ -33,9 +32,6 @@ export default {
   },
   methods: {
     ...mapActions(["updatePrintView", "setTheme"]),
-    toggleDrawer() {
-      console.log("inadsonfdadfa");
-    },
     setVueTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },

@@ -1,12 +1,11 @@
 <template>
   <v-select
-    :dense="makeDense"
+    :density="makeDense ? 'compact' : 'default'"
     :label="innerLabel"
     v-model="selectedItems"
     :items="innerItems"
     :multiple="allowMultiple"
     :clearable="allowMultiple"
-    :outlined="makeOutlined"
     :hint="innerHint"
     :persistent-hint="innerHint.length > 0"
     ref="select"
@@ -19,9 +18,7 @@
             {{ icon }}
           </v-icon>
         </v-list-item-action>
-        <v-list-item-content>
-          <v-list-item-title>Todos</v-list-item-title>
-        </v-list-item-content>
+        <v-list-item-title>Todos</v-list-item-title>
       </v-list-item>
       <v-divider class="mt-2"></v-divider>
     </template>
@@ -32,7 +29,7 @@
 export default {
   name: "CheckList",
   data: () => ({
-    selectedItems: []
+    selectedItems: [],
   }),
   props: [
     "innerItems",
@@ -42,7 +39,7 @@ export default {
     "makeOutlined",
     "makeDense",
     "innerHint",
-    "allowClean" //required by default
+    "allowClean", //required by default
   ],
   computed: {
     allItems() {
@@ -55,7 +52,7 @@ export default {
       if (this.allItems) return "mdi-close-box";
       if (this.someItems) return "mdi-minus-box";
       return "mdi-checkbox-blank-outline";
-    }
+    },
   },
 
   methods: {
@@ -69,7 +66,10 @@ export default {
       });
     },
     clear() {
-      this.selectedItems = [];
+      if (this.allowMultiple) {
+        return (this.selectedItems = []);
+      }
+      this.selectedItems = "";
     },
     innerFocus() {
       this.$refs.select.focus();
@@ -82,12 +82,12 @@ export default {
     changed(value) {
       this.$emit("selected-items", value);
       this.$emit("changed", "changed");
-    }
+    },
   },
   watch: {
     selectedItems() {
       this.changed(this.selectedItems);
-    }
-  }
+    },
+  },
 };
 </script>

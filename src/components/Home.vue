@@ -1,5 +1,5 @@
 <template>
-  <v-card :class="`${theme.dark ? '' : theme.color}`">
+  <v-card :class="`${theme.dark ? '' : theme.color} h-100`">
     <Evaluation />
     <v-container>
       <v-tabs
@@ -8,8 +8,8 @@
         background-color="transparent"
         grow
       >
-        <v-tab v-for="(item, n) in tabData" :key="n" width="100%">
-          <TabTitle :title="`Formulário ${n + 1}`" />
+        <v-tab v-for="(item, n) in tabData" :key="n">
+          {{ `Formulário ${n + 1}` }}
           <!-- Formulário {{ n + 1 }} -->
         </v-tab>
       </v-tabs>
@@ -35,20 +35,19 @@
         <Form1 />
       </v-window-item>
       <v-window-item>
-        <Form2 />
+        <!-- <Form2 /> -->
       </v-window-item>
       <v-window-item eager>
-        <Form3 />
+        <!-- <Form3 /> -->
       </v-window-item>
       <v-window-item eager>
-        <Form4 />
+        <!-- <Form4 /> -->
       </v-window-item>
     </v-window>
   </v-card>
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent } from "vue";
 import { mapGetters } from "vuex";
 
 import Evaluation from "@/components/Evaluation.vue";

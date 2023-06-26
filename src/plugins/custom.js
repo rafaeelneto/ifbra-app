@@ -1,5 +1,5 @@
 export const custom = {
-  normalize: function(input) {
+  normalize: function (input) {
     return input
       .split(" ")
       .reduce((output, item) => {
@@ -8,9 +8,9 @@ export const custom = {
           item
             .normalize("NFD")
             .replace(/[^a-zA-Zs]/g, "")
-            .toLowerCase()
+            .toLowerCase(),
         ];
       }, [])
       .join(" ");
-  }
+  },
 };

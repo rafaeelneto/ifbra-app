@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row align="center">
+    <v-row class="align-center">
       <v-col cols="12">
         <v-autocomplete
           :items="allCID"
@@ -12,6 +12,7 @@
           :clearable="allowMultiple"
           :messages="messages"
           v-model="text"
+          v-bind="$props"
           chips
           dense
           @change="$emit('inner-change', text)"
@@ -28,7 +29,7 @@ export default {
   name: "AutoComplete",
   data: () => ({
     value: null,
-    text: ""
+    text: "",
   }),
   props: ["innerLabel", "allowMultiple", "innerHint", "messages", "require"],
   methods: {
@@ -37,10 +38,10 @@ export default {
     },
     focus() {
       this.$refs.field.focus();
-    }
+    },
   },
   computed: {
-    ...mapGetters(["allCID"])
-  }
+    ...mapGetters(["allCID"]),
+  },
 };
 </script>

@@ -7,7 +7,7 @@
     <v-row>
       <v-col v-if="allEvaluators.length > 0">
         Data da Avaliação:
-        {{ evalDate.split("-").reverse().join("/") }}
+        {{ format(evalDate, "dd/MM/yyyy") }}
       </v-col>
     </v-row>
     <v-row v-for="evaluator in allEvaluators" :key="evaluator.id">
@@ -37,7 +37,7 @@
         Nascimento:
         {{
           this.personal.birthday.length > 0
-            ? this.personal.birthday.split("-").reverse().join("/")
+            ? format(this.personal.birthday, "dd/MM/yyyy")
             : ""
         }}
       </v-col>
@@ -69,6 +69,8 @@
 <script>
 import { mapGetters } from "vuex";
 
+import { format } from "date-fns";
+
 import LighterTextField from "@/components/LighterTextField.vue";
 import EmptyFormAlert from "@/components/print/EmptyFormAlert.vue";
 
@@ -78,6 +80,9 @@ export default {
     EmptyFormAlert,
   },
   computed: mapGetters(["evalDate", "personal", "allEvaluators"]),
+  methods: {
+    format,
+  },
 };
 </script>
 

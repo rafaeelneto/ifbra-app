@@ -10,12 +10,14 @@
         <v-row>
           <v-col>Dados do Avaliado</v-col>
         </v-row>
-        <v-row align="center" dense class="flex">
+        <v-row dense class="flex align-center">
           <v-col md="6" cols="12">
             <v-text-field
               v-model="fieldValues.name"
               :rules="required(fieldValues.name)"
               label="Nome completo"
+              variant="outlined"
+              density="compact"
               @change="updatePrintView()"
             />
           </v-col>
@@ -24,6 +26,8 @@
               v-model="fieldValues.department"
               :rules="required(fieldValues.department)"
               label="Lotação"
+              variant="outlined"
+              density="compact"
               @change="updatePrintView()"
             />
           </v-col>
@@ -32,18 +36,20 @@
               inner-hint=""
               :inner-items="sexo"
               inner-label="Sexo"
+              variant="outlined"
+              density="compact"
               @selected-items="fieldValues.sex = $event"
               @changed="updatePrintView()"
               :rules="required(fieldValues.sex)"
             />
           </v-col>
         </v-row>
-        <v-row align="center" dense class="flex">
-          <v-col md="3" cols="6" justify="space-around">
+        <v-row dense class="flex align-start justify-center">
+          <v-col md="3" cols="6" justify="space-around" class="align-start">
             <DateDialog
               label="Data de nascimento"
               @inner-date="calcAge($event)"
-              :default-date="(new Date().getFullYear() - 50).toString()"
+              :default-date="new Date().getFullYear() - 50"
               @date="fieldValues.birthday = $event"
             />
           </v-col>
@@ -53,7 +59,8 @@
               v-model="idade"
               readonly
               disabled
-              outlined
+              variant="outlined"
+              density="compact"
               :persistent-hint="idade.length == 0"
               hint="Calculada automaticamente"
               @change="updatePrintView()"
@@ -64,6 +71,8 @@
               v-model="fieldValues.registry"
               :rules="required(fieldValues.registry)"
               label="Matrícula"
+              variant="outlined"
+              density="compact"
               @change="updatePrintView()"
             />
           </v-col>
@@ -72,6 +81,8 @@
               inner-hint=""
               :inner-items="Form[7]"
               inner-label="Etnia"
+              variant="outlined"
+              density="compact"
               @selected-items="fieldValues.ethnicity = $event"
               @changed="updatePrintView()"
             />
@@ -81,11 +92,13 @@
         <v-row>
           <v-col>Dados da Avaliação</v-col>
         </v-row>
-        <v-row align="center" dense class="flex">
+        <v-row dense class="flex align-center">
           <v-col md="3" cols="6">
             <CheckList
               inner-hint=""
               inner-label="Tipo de Deficiência"
+              variant="outlined"
+              density="compact"
               :inner-items="Form[6]"
               :allow-multiple="true"
               @selected-items="fieldValues.deficiencyType = $event"
@@ -96,6 +109,8 @@
             <AutoComplete
               :allow-multiple="false"
               inner-label="Diagnóstico médico"
+              variant="outlined"
+              density="compact"
               :inner-hint="cidHint"
               @inner-change="cid = $event"
               @refill-cid="CID10[2] = $event"
@@ -108,15 +123,14 @@
             cols="2"
             class="d-flex justify-center align-center text-center"
           >
-            <v-btn @click="addCID()" icon align="center">
+            <v-btn @click="addCID()" icon class="align-center">
               <v-icon>mdi-plus-box</v-icon>
             </v-btn>
           </v-col>
           <v-row
             v-if="this.fieldValues.CID.length > 0"
-            align="center"
             dense
-            class="flex"
+            class="flex align-center"
           >
             <v-col
               class="flex"
@@ -129,18 +143,22 @@
             </v-col>
           </v-row>
         </v-row>
-        <v-row align="center" dense class="flex">
+        <v-row dense class="flex align-center">
           <v-col md="10" cols="10">
             <v-text-field
               v-model="fieldValues.address"
               :rules="required(fieldValues.address)"
               label="Local da Avaliação"
+              variant="outlined"
+              density="compact"
               @change="updatePrintView()"
             />
           </v-col>
           <v-col md="2" cols="2">
             <CheckList
               inner-hint=""
+              variant="outlined"
+              density="compact"
               :inner-items="uf"
               inner-label="UF"
               @selected-items="fieldValues.UF = $event"
@@ -148,10 +166,12 @@
             />
           </v-col>
         </v-row>
-        <v-row align="center" dense class="flex">
+        <v-row dense class="flex align-center">
           <v-col md="3" cols="6">
             <CheckList
               inner-hint=""
+              variant="outlined"
+              density="compact"
               :inner-items="Form[8].Informante"
               inner-label="Quem prestou as informações"
               @selected-items="setInformante($event)"
@@ -162,6 +182,8 @@
             <v-text-field
               id="informante"
               label="Informante"
+              variant="outlined"
+              density="compact"
               v-model="informante.nome"
               :readonly="informante.readonly"
               :disabled="informante.disabled"
@@ -175,10 +197,12 @@
             />
           </v-col>
         </v-row>
-        <v-row align="center" dense class="flex">
+        <v-row dense class="flex align-center">
           <v-col md="12" cols="12">
             <v-textarea
               clearable
+              variant="outlined"
+              density="compact"
               label="Histórico clínico e social"
               v-model="fieldValues.history"
               :rules="required(fieldValues.history)"
@@ -192,96 +216,89 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
-import Form from '@/assets/json/form1.json';
-import CID10 from '@/assets/json/cid10.min.json';
-import { mapActions, mapGetters } from 'vuex';
+import { differenceInYears } from "date-fns";
+
+import Form from "@/assets/json/form1.json";
+import CID10 from "@/assets/json/cid10.min.json";
+import { mapActions, mapGetters } from "vuex";
+import DateDialog from "@/components/DateDialog.vue";
+import AutoComplete from "@/components/AutoComplete.vue";
+import FormHeader from "@/components/forms/FormHeader.vue";
+import CheckList from "@/components/CheckList.vue";
+import CIDFlex from "@/components/CIDFlex.vue";
+
 export default {
-  data: () => ({
-    idade: '',
-    sexo: ['Masculino', 'Feminino'],
-    hide: false,
-    cid: '',
-    cidHint: 'CID',
-    hideInformante: false,
-    informante: {
-      tipo: '',
-      nome: '',
-      readonly: true,
-      disabled: true,
-      hint: '',
-    },
-    uf: 'AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MG,MS,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO'.split(
-      ','
-    ),
-    fieldValues: {
-      CID: [],
-    },
-    Form: Object.values(Form),
-    CID10: Object.values(CID10),
-  }),
+  data() {
+    return {
+      idade: "",
+      sexo: ["Masculino", "Feminino"],
+      hide: false,
+      cid: "",
+      cidHint: "CID",
+      hideInformante: false,
+      informante: {
+        tipo: "",
+        nome: "",
+        readonly: true,
+        disabled: true,
+        hint: "",
+      },
+      uf: "AC,AL,AP,AM,BA,CE,DF,ES,GO,MA,MT,MG,MS,PA,PB,PR,PE,PI,RJ,RN,RS,RO,RR,SC,SP,SE,TO".split(
+        ","
+      ),
+      fieldValues: {
+        CID: [],
+      },
+      Form: Object.values(Form),
+      CID10: Object.values(CID10),
+    };
+  },
   components: {
-    DateDialog: defineAsyncComponent(() =>
-      import('@/components/DateDialog.vue')
-    ),
-    AutoComplete: defineAsyncComponent(() =>
-      import('@/components/AutoComplete.vue')
-    ),
-    FormHeader: defineAsyncComponent(() =>
-      import('@/components/forms/FormHeader.vue')
-    ),
-    CheckList: defineAsyncComponent(() => import('@/components/CheckList.vue')),
-    CIDFlex: defineAsyncComponent(() => import('@/components/CIDFlex.vue')),
+    DateDialog,
+    AutoComplete,
+    FormHeader,
+    CheckList,
+    CIDFlex,
   },
   methods: {
-    ...mapActions(['setInfo', 'unlistCID', 'refillCID', 'fillCID']),
+    ...mapActions(["setInfo", "unlistCID", "refillCID", "fillCID"]),
     calcAge(date) {
-      const splitted = date.split('/');
-      var day = `${parseInt(splitted[0], 10) + 1}`.padStart(2, '0');
-      const month = `${parseInt(splitted[1], 10)}`.padStart(2, '0');
-      const year = `${parseInt(splitted[2], 10)}`.padStart(2, '0');
-      date = `${year}-${month}-${day++}`;
-      var today = new Date();
-      var birthday = new Date(date.split('/').reverse().join('-'));
-      var age = today.getFullYear() - birthday.getFullYear();
-      var m = today.getMonth() - birthday.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
-        age--;
-      }
-      this.idade = isNaN(age) ? 'Data inválida' : `${age} anos`;
+      const age = differenceInYears(new Date(), date);
+
+      this.idade = isNaN(age) ? "Data inválida" : `${age} anos`;
       this.fieldValues.age = age;
-      this.fieldValues.birthday = birthday.toISOString().substr(0, 10);
+      this.fieldValues.birthday = date;
       this.updatePrintView();
     },
     showHide(status) {
       this.hide = status;
     },
     setInformante(informante) {
-      if (this.$custom.normalize(informante) != 'a propria pessoa') {
+      if (this.$custom.normalize(informante) !== "a propria pessoa") {
         this.informante.readonly = false;
         this.informante.disabled = false;
-        this.informante.hint = 'Insira o nome do informante';
+        this.informante.hint = "Insira o nome do informante";
         this.$nextTick(() => this.$refs.informante.focus());
         this.hideInformante = false;
       } else {
         this.hideInformante = true;
         this.informante.readonly = true;
         this.informante.disabled = true;
-        this.informante.hint = '';
-        this.informante.nome = '';
+        this.informante.hint = "";
+        this.informante.nome = "";
       }
-      if (this.fieldValues.informant == undefined) {
-        this.fieldValues.informant = { type: '', name: '' };
+      if (this.fieldValues.informant === undefined) {
+        this.fieldValues.informant = { type: "", name: "" };
       }
       this.fieldValues.informant.type = informante;
     },
     blurInformante() {
       if (this.informante.nome.length > 0) {
-        this.informante.hint = '';
+        this.informante.hint = "";
       }
       this.fieldValues.informant.name = this.informante.nome;
     },
-    required: (val) => [(val || '').length > 0 || 'Campo obrigatório!'],
+    required: (val) => [(val || "").length > 0 || "Campo obrigatório!"],
     addCID() {
       if (
         this.cid.length > 0 &&
@@ -292,17 +309,17 @@ export default {
         this.fieldValues.CID.push(this.cid);
         this.$refs.cid.clear();
         this.unlistCID(this.cid);
-        this.cidHint = 'CID';
-        this.cid = '';
+        this.cidHint = "CID";
+        this.cid = "";
       } else {
         this.$refs.cid.focus();
-        this.cidHint = 'Informe o CID';
+        this.cidHint = "Informe o CID";
       }
       this.updatePrintView();
     },
     delCID(cid) {
       this.fieldValues.CID = this.fieldValues.CID.filter((element) => {
-        if (element != cid) {
+        if (element !== cid) {
           return element;
         }
       });
@@ -310,21 +327,21 @@ export default {
     },
     updatePrintView() {
       this.setInfo({
-        name: this.fieldValues.name || '',
-        CID: this.fieldValues.CID || '',
-        registry: this.fieldValues.registry || '',
-        sex: this.fieldValues.sex || '',
-        ethnicity: this.fieldValues.ethnicity || '',
-        deficiencyType: this.fieldValues.deficiencyType || '',
-        history: this.fieldValues.history || '',
-        birthday: this.fieldValues.birthday || '',
-        informant: this.fieldValues.informant || '',
-        age: this.fieldValues.age || '',
+        name: this.fieldValues.name || "",
+        CID: this.fieldValues.CID || "",
+        registry: this.fieldValues.registry || "",
+        sex: this.fieldValues.sex || "",
+        ethnicity: this.fieldValues.ethnicity || "",
+        deficiencyType: this.fieldValues.deficiencyType || "",
+        history: this.fieldValues.history || "",
+        birthday: this.fieldValues.birthday || "",
+        informant: this.fieldValues.informant || "",
+        age: this.fieldValues.age || "",
       });
     },
   },
   computed: {
-    ...mapGetters(['theme', 'personal', 'deficiencies']),
+    ...mapGetters(["theme", "personal", "deficiencies"]),
   },
   created() {
     this.fillCID(CID10.list);

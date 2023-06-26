@@ -1,11 +1,11 @@
 const state = {
   evaluators: [],
-  date: ""
+  date: "",
 };
 
 const getters = {
-  allEvaluators: state => state.evaluators,
-  evalDate: state => state.date
+  allEvaluators: (state) => state.evaluators,
+  evalDate: (state) => state.date,
 };
 
 const actions = {
@@ -17,7 +17,7 @@ const actions = {
   },
   setDate({ commit }, date) {
     commit("mutateDate", date);
-  }
+  },
 };
 
 const mutations = {
@@ -27,13 +27,13 @@ const mutations = {
   mutateDate: (state, date) => (state.date = date),
   delEvaluator: (state, id) =>
     (state.evaluators = state.evaluators.filter(
-      evaluator => evaluator.id != id
-    ))
+      (evaluator) => evaluator.id != id
+    )),
 };
 
 export default {
   state,
   actions,
   mutations,
-  getters
+  getters,
 };
