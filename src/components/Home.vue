@@ -8,9 +8,12 @@
         background-color="transparent"
         grow
       >
-        <v-tab v-for="(item, n) in tabData" :key="n">
+        <v-tab
+          v-for="(item, n) in tabData"
+          class="d-flex justify-center"
+          :key="n"
+        >
           {{ `Formulário ${n + 1}` }}
-          <!-- Formulário {{ n + 1 }} -->
         </v-tab>
       </v-tabs>
       <v-tabs
@@ -23,7 +26,7 @@
         <v-tab
           v-for="(item, n) in tabData"
           :key="n"
-          class="d-flex justify-start"
+          class="d-flex justify-center"
         >
           Formulário {{ n + 1 }}
         </v-tab>
@@ -35,7 +38,7 @@
         <Form1 />
       </v-window-item>
       <v-window-item>
-        <!-- <Form2 /> -->
+        <Form2 />
       </v-window-item>
       <v-window-item eager>
         <!-- <Form3 /> -->

@@ -10,7 +10,7 @@
         <v-row>
           <v-col>Dados do Avaliado</v-col>
         </v-row>
-        <v-row dense class="flex align-center">
+        <v-row dense class="d-flex align-center">
           <v-col md="6" cols="12">
             <v-text-field
               v-model="fieldValues.name"
@@ -44,7 +44,7 @@
             />
           </v-col>
         </v-row>
-        <v-row dense class="flex align-start justify-center">
+        <v-row dense class="d-flex align-start justify-center">
           <v-col md="3" cols="6" justify="space-around" class="align-start">
             <DateDialog
               label="Data de nascimento"
@@ -92,7 +92,7 @@
         <v-row>
           <v-col>Dados da Avaliação</v-col>
         </v-row>
-        <v-row dense class="flex align-center">
+        <v-row dense class="d-flex align-center">
           <v-col md="3" cols="6">
             <CheckList
               inner-hint=""
@@ -121,19 +121,25 @@
           <v-col
             md="1"
             cols="2"
-            class="d-flex justify-center align-center text-center"
+            class="d-flex justify-center align-start text-center h-100"
           >
-            <v-btn @click="addCID()" icon class="align-center">
+            <v-btn
+              @click="addCID()"
+              icon
+              variant="text"
+              density="compact"
+              class="align-center"
+            >
               <v-icon>mdi-plus-box</v-icon>
             </v-btn>
           </v-col>
           <v-row
             v-if="this.fieldValues.CID.length > 0"
             dense
-            class="flex align-center"
+            class="d-flex align-center"
           >
             <v-col
-              class="flex"
+              class="d-flex"
               v-for="cid in this.fieldValues.CID"
               :key="cid"
               cols="6"
@@ -143,7 +149,7 @@
             </v-col>
           </v-row>
         </v-row>
-        <v-row dense class="flex align-center">
+        <v-row dense class="d-flex align-center">
           <v-col md="10" cols="10">
             <v-text-field
               v-model="fieldValues.address"
@@ -166,7 +172,7 @@
             />
           </v-col>
         </v-row>
-        <v-row dense class="flex align-center">
+        <v-row dense class="d-flex align-center">
           <v-col md="3" cols="6">
             <CheckList
               inner-hint=""
@@ -197,7 +203,7 @@
             />
           </v-col>
         </v-row>
-        <v-row dense class="flex align-center">
+        <v-row dense class="d-flex align-center">
           <v-col md="12" cols="12">
             <v-textarea
               clearable

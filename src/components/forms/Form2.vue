@@ -52,25 +52,27 @@
   </div>
 </template>
 <script>
-import { defineAsyncComponent } from 'vue';
-import Funcoes from '@/assets/json/form2.json';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from "vuex";
+import LighterTextField from "@/components/LighterTextField.vue";
+import RowSwitch from "@/components/RowSwitch.vue";
+import FormHeader from "@/components/forms/FormHeader.vue";
+
+import Funcoes from "@/assets/json/form2.json";
+
+import eventBus from "@/utils/eventBus";
+
 export default {
   data: () => ({
     funcoes: Object.values(Funcoes),
     width: 0,
   }),
   components: {
-    LighterTextField: defineAsyncComponent(() =>
-      import('@/components/LighterTextField.vue')
-    ),
-    RowSwitch: defineAsyncComponent(() => import('@/components/RowSwitch.vue')),
-    FormHeader: defineAsyncComponent(() =>
-      import('@/components/forms/FormHeader.vue')
-    ),
+    LighterTextField,
+    RowSwitch,
+    FormHeader,
   },
   mounted() {
-    this.$eventHub.$on('resize', this.setWidth);
+    eventBus.on("resize", this.setWidth);
   },
   methods: {
     setWidth() {
@@ -80,15 +82,18 @@ export default {
       const ref = `row-${i}-${j}`.toString();
       this.$refs[ref][0].innerChange();
       this.updateSubFunction({ i: i, j: j });
-      this.$eventHub.$emit('force-blur');
+      eventBus.emit("force-blur");
     },
-    ...mapActions(['setFunctions', 'updateSubFunction']),
+    ...mapActions(["setFunctions", "updateSubFunction"]),
   },
   created() {
     this.setWidth();
     this.setFunctions(this.funcoes);
   },
-  computed: mapGetters(['theme', 'bodyFunctions']),
+  computed: mapGetters(["theme", "bodyFunctions"]),
+  beforeUnmount() {
+    eventBus.off("resize", this.setWidth);
+  },
 };
 </script>
 

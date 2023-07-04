@@ -6,25 +6,20 @@
       class=""
       width="100%"
       height="5em"
-      :class="
-        `d-inline-flex align-center justify-space-between form
-        ${!theme.dark ? theme.color : ''}`
-      "
+      style="overflow: unset"
+      :class="`d-inline-flex align-center justify-space-between form
+        ${!theme.dark ? theme.color : ''}`"
     >
-      <v-card
-        flat
-        tile
-        :class="`${!theme.dark ? theme.color : ''} d-flex text`"
-      >
+      <v-card-text :class="`${!theme.dark ? theme.color : ''} d-flex text`">
         {{ text }}
-      </v-card>
+      </v-card-text>
       <v-card
         flat
         tile
         v-if="!hideButton"
-        :class="
-          `${!theme.dark ? theme.color : ''} d-flex justify-right minux-btn`
-        "
+        :class="`${
+          !theme.dark ? theme.color : ''
+        } d-flex justify-right minux-btn`"
         width="2em"
       >
         <v-btn @click="$emit('inner-click')" plain width="1em">
@@ -38,10 +33,10 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  props: ["text","hideButton"],
+  props: ["text", "hideButton"],
   computed: {
-    ...mapGetters(["theme"])
-  }
+    ...mapGetters(["theme"]),
+  },
 };
 </script>
 <style scoped>

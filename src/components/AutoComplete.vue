@@ -13,9 +13,9 @@
           :messages="messages"
           v-model="text"
           v-bind="$props"
+          variant="outlined"
+          density="compact"
           chips
-          dense
-          @change="$emit('inner-change', text)"
           ref="field"
         />
       </v-col>
@@ -38,6 +38,11 @@ export default {
     },
     focus() {
       this.$refs.field.focus();
+    },
+  },
+  watch: {
+    text(newValue) {
+      this.$emit("inner-change", newValue);
     },
   },
   computed: {
