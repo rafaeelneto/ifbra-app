@@ -1,7 +1,7 @@
 <template>
-  <v-tooltip :v-model="true" bottom open-delay="200" max-width="40%">
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn icon v-bind="attrs" v-on="on">
+  <v-tooltip :v-model="true" location="bottom" open-delay="200" minWidth="40%">
+    <template v-slot:activator="{ props }">
+      <v-btn variant="text" icon v-bind="props">
         <v-icon :color="`${theme.dark ? '' : 'blue lighten-1'}`">
           {{ mdiIcon }}
         </v-icon>
@@ -26,12 +26,19 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 export default {
-  name: "Tooltip",
-  props: ["content", "mdi-icon", "arrayContent"],
+  name: 'Tooltip',
+  props: ['content', 'mdi-icon', 'arrayContent'],
   computed: {
-    ...mapGetters(["theme"])
-  }
+    ...mapGetters(['theme']),
+  },
 };
 </script>
+
+<style scoped>
+.tooltip {
+  max-width: 40%;
+  min-width: 500px;
+}
+</style>

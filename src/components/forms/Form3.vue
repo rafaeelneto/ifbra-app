@@ -1,6 +1,6 @@
 <template>
   <div :class="`${!theme.dark ? theme.color : ''}`">
-    <v-flex>
+    <div class="d-flex">
       <v-container>
         <FormHeader
           title="Formulário 3"
@@ -9,7 +9,7 @@
           @toggle="showHide($event)"
         />
         <div v-bind:class="{ 'd-none': hide }">
-          <v-row align="center" dense class="flex">
+          <v-row align="center" dense class="d-flex">
             <v-col :cols="ContentCols">
               <LighterTextField comment="" title="Domínios e Atividades" />
             </v-col>
@@ -124,7 +124,7 @@
           </div>
         </div>
       </v-container>
-    </v-flex>
+    </div>
   </div>
 </template>
 <script>

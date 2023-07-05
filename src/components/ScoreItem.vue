@@ -1,7 +1,8 @@
 <template>
   <v-select
     class="score-item"
-    :dense="makeDense"
+    variant="outlined"
+    density="compact"
     :label="innerLabel"
     v-model="selected"
     :items="innerItems"
@@ -14,21 +15,23 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
+import eventBus from '@/utils/eventBus';
+
 export default {
-  name: "CheckList",
+  name: 'CheckList',
   data: () => ({
-    selected: []
+    selected: [],
   }),
   props: [
-    "innerItems",
-    "innerLabel",
-    "makeClearable",
-    "makeOutlined",
-    "makeDense",
-    "innerHint",
-    "scoreData",
-    "allowClean" //required by default
+    'innerItems',
+    'innerLabel',
+    'makeClearable',
+    'makeOutlined',
+    'makeDense',
+    'innerHint',
+    'scoreData',
+    'allowClean', //required by default
   ],
   computed: {
     allItems() {
@@ -38,11 +41,11 @@ export default {
       return this.selected.length > 0 && !this.allItems;
     },
     icon() {
-      if (this.allItems) return "mdi-close-box";
-      if (this.someItems) return "mdi-minus-box";
-      return "mdi-checkbox-blank-outline";
+      if (this.allItems) return 'mdi-close-box';
+      if (this.someItems) return 'mdi-minus-box';
+      return 'mdi-checkbox-blank-outline';
     },
-    ...mapGetters(["allScores", "personal", "totalScores", "filledStatus"])
+    ...mapGetters(['allScores', 'personal', 'totalScores', 'filledStatus']),
   },
 
   methods: {
@@ -52,27 +55,27 @@ export default {
         i: this.scoreData.i,
         j: this.scoreData.j,
         value: this.selected,
-        dominio: this.scoreData.dominio
+        dominio: this.scoreData.dominio,
       };
       this.updateScores(update);
       this.cycleScores(update);
 
       if (this.filledStatus) {
         this.calcScores();
-        this.$eventHub.$emit("filled");
+        eventBus.emit('filled');
       }
       this.updateFuzzy({
         dominio: this.scoreData.dominio,
-        scores: this.allScores
+        scores: this.allScores,
       });
-      this.$eventHub.$emit("score");
+      eventBus.emit('score');
     },
     applyFuzzy(dominios) {
-      dominios = dominios.map(dominio =>
+      dominios = dominios.map((dominio) =>
         this.$custom.normalize(dominio).toLowerCase()
       );
       if (
-        dominios.some(element => {
+        dominios.some((element) => {
           return element === this.scoreData.dominio;
         })
       ) {
@@ -104,22 +107,25 @@ export default {
     },
     isRequired(val) {
       if (!this.allowClean) {
-        return [(val || "").length > 0 || "Campo Obrigatório"];
+        return [(val || '').length > 0 || 'Campo Obrigatório'];
       }
     },
     changed() {
-      this.$emit("changed", "changed");
+      this.$emit('changed', 'changed');
     },
-    ...mapActions(["updateScores", "cycleScores", "updateFuzzy", "calcScores"])
+    ...mapActions(['updateScores', 'cycleScores', 'updateFuzzy', 'calcScores']),
   },
   watch: {
     selected() {
       this.changed(this.selected);
       this.refreshScores();
-    }
+    },
   },
   created() {
-    this.$eventHub.$on("fuzzyfy", this.applyFuzzy);
-  }
+    eventBus.on('fuzzyfy', this.applyFuzzy);
+  },
+  beforeUnmount() {
+    eventBus.off('fuzzyfy', this.applyFuzzy);
+  },
 };
 </script>

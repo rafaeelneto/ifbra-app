@@ -7,6 +7,7 @@
     :multiple="allowMultiple"
     :clearable="allowMultiple"
     :hint="innerHint"
+    variant="outlined"
     :persistent-hint="innerHint.length > 0"
     ref="select"
     :rules="isRequired(selectedItems)"
@@ -27,19 +28,19 @@
 
 <script>
 export default {
-  name: "CheckList",
+  name: 'CheckList',
   data: () => ({
     selectedItems: [],
   }),
   props: [
-    "innerItems",
-    "innerLabel",
-    "allowMultiple",
-    "makeClearable",
-    "makeOutlined",
-    "makeDense",
-    "innerHint",
-    "allowClean", //required by default
+    'innerItems',
+    'innerLabel',
+    'allowMultiple',
+    'makeClearable',
+    'makeOutlined',
+    'makeDense',
+    'innerHint',
+    'allowClean', //required by default
   ],
   computed: {
     allItems() {
@@ -49,9 +50,9 @@ export default {
       return this.selectedItems.length > 0 && !this.allItems;
     },
     icon() {
-      if (this.allItems) return "mdi-close-box";
-      if (this.someItems) return "mdi-minus-box";
-      return "mdi-checkbox-blank-outline";
+      if (this.allItems) return 'mdi-close-box';
+      if (this.someItems) return 'mdi-minus-box';
+      return 'mdi-checkbox-blank-outline';
     },
   },
 
@@ -69,19 +70,19 @@ export default {
       if (this.allowMultiple) {
         return (this.selectedItems = []);
       }
-      this.selectedItems = "";
+      this.selectedItems = '';
     },
     innerFocus() {
       this.$refs.select.focus();
     },
     isRequired(val) {
       if (!this.allowClean) {
-        return [(val || "").length > 0 || "Campo Obrigatório"];
+        return [(val || '').length > 0 || 'Campo Obrigatório'];
       }
     },
     changed(value) {
-      this.$emit("selected-items", value);
-      this.$emit("changed", "changed");
+      this.$emit('selected-items', value);
+      this.$emit('changed', 'changed');
     },
   },
   watch: {

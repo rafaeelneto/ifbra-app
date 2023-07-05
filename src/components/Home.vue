@@ -41,7 +41,7 @@
         <Form2 />
       </v-window-item>
       <v-window-item eager>
-        <!-- <Form3 /> -->
+        <Form3 />
       </v-window-item>
       <v-window-item eager>
         <!-- <Form4 /> -->
@@ -51,14 +51,14 @@
 </template>
 
 <script lang="ts">
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import Evaluation from "@/components/Evaluation.vue";
-import TabTitle from "@/components/TabTitle.vue";
-import Form1 from "@/components/forms/Form1.vue";
-import Form2 from "@/components/forms/Form2.vue";
-import Form3 from "@/components/forms/Form3.vue";
-import Form4 from "@/components/forms/Form4.vue";
+import Evaluation from '@/components/Evaluation.vue';
+import TabTitle from '@/components/TabTitle.vue';
+import Form1 from '@/components/forms/Form1.vue';
+import Form2 from '@/components/forms/Form2.vue';
+import Form3 from '@/components/forms/Form3.vue';
+import Form4 from '@/components/forms/Form4.vue';
 
 export default {
   components: {
@@ -74,26 +74,26 @@ export default {
       tab: null,
       tabData: [
         {
-          subtitle: "Identificação do Avaliado e da Avaliação",
-          comment: "Matriz",
+          subtitle: 'Identificação do Avaliado e da Avaliação',
+          comment: 'Matriz',
         },
         {
-          subtitle: "Funções corporais acometidas",
-          comment: "a ser preenchido pelo médico perito",
+          subtitle: 'Funções corporais acometidas',
+          comment: 'a ser preenchido pelo médico perito',
         },
         {
-          subtitle: "Aplicação do Instrumento",
-          comment: "Matriz",
+          subtitle: 'Aplicação do Instrumento',
+          comment: 'Matriz',
         },
         {
-          subtitle: "Aplicação do Modelo Linguístico Fuzzy",
-          comment: "",
+          subtitle: 'Aplicação do Modelo Linguístico Fuzzy',
+          comment: '',
         },
       ],
       eager: [false, false, false],
     };
   },
-  computed: mapGetters(["theme"]),
+  computed: mapGetters(['theme']),
 };
 </script>
 <style>
