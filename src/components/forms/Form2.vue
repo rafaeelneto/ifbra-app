@@ -21,45 +21,44 @@
             comment=""
           />
         </v-card>
-        <v-card
-          flat
-          tile
+        <v-row v-ripple
           no-gutters
           v-for="(subfuncao, j) in funcao.SubFuncao"
           :key="j"
-          :class="`d-flex align-center flex-row pad-me
+          :class="`d-flex align-center flex-row pad-me mb-2
             ${theme.dark ? '' : theme.color}`"
           hover
           @click="switchRow({ i, j })"
         >
-          <v-card
+          <v-col
             flat
             tile
-            :class="`align-center d-flex ${theme.dark ? '' : theme.color}`"
+            cols="2"
+            :class="`align-end d-flex ${theme.dark ? '' : theme.color}`"
           >
             <RowSwitch :ref="`row-${i}-${j}`" />
-          </v-card>
-          <v-card tile flat>
+          </v-col>
+          <v-col tile flat cols="10">
             <LighterTextField
               :title="`${i + 1}.${j + 1} ${subfuncao.Tipo}:`"
               :subtitle="`${subfuncao.Detalhe}`"
               comment=""
             />
-          </v-card>
-        </v-card>
+          </v-col>
+        </v-row>
       </v-card>
     </v-container>
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
-import LighterTextField from "@/components/LighterTextField.vue";
-import RowSwitch from "@/components/RowSwitch.vue";
-import FormHeader from "@/components/forms/FormHeader.vue";
+import { mapActions, mapGetters } from 'vuex';
+import LighterTextField from '@/components/LighterTextField.vue';
+import RowSwitch from '@/components/RowSwitch.vue';
+import FormHeader from '@/components/forms/FormHeader.vue';
 
-import Funcoes from "@/assets/json/form2.json";
+import Funcoes from '@/assets/json/form2.json';
 
-import eventBus from "@/utils/eventBus";
+import eventBus from '@/utils/eventBus';
 
 export default {
   data: () => ({
@@ -72,7 +71,7 @@ export default {
     FormHeader,
   },
   mounted() {
-    eventBus.on("resize", this.setWidth);
+    eventBus.on('resize', this.setWidth);
   },
   methods: {
     setWidth() {
@@ -82,17 +81,17 @@ export default {
       const ref = `row-${i}-${j}`.toString();
       this.$refs[ref][0].innerChange();
       this.updateSubFunction({ i: i, j: j });
-      eventBus.emit("force-blur");
+      eventBus.emit('force-blur');
     },
-    ...mapActions(["setFunctions", "updateSubFunction"]),
+    ...mapActions(['setFunctions', 'updateSubFunction']),
   },
   created() {
     this.setWidth();
     this.setFunctions(this.funcoes);
   },
-  computed: mapGetters(["theme", "bodyFunctions"]),
+  computed: mapGetters(['theme', 'bodyFunctions']),
   beforeUnmount() {
-    eventBus.off("resize", this.setWidth);
+    eventBus.off('resize', this.setWidth);
   },
 };
 </script>

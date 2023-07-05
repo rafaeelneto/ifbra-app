@@ -16,18 +16,19 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 export default {
-  props: ["title", "subtitle", "comment", "text"],
+  props: ['title', 'subtitle', 'comment', 'text'],
   computed: {
-    ...mapGetters(["theme"])
-  }
+    ...mapGetters(['theme']),
+  },
 };
 </script>
 
 <style>
 .wrap-word {
   word-break: keep-all;
+  white-space: unset !important;
 }
 .default-grey {
   background-color: #121212 !important;

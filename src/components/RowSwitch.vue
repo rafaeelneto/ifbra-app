@@ -1,7 +1,5 @@
 <template>
-  <v-container fluid>
-    <v-switch v-model="val" />
-  </v-container>
+    <v-switch v-model="val" hide-details/>
 </template>
 
 <script>
