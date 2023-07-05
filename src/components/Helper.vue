@@ -1,38 +1,41 @@
 <template>
   <div :class="`${!theme.dark ? theme.color : ''}`">
     <v-card :class="`${!theme.dark ? theme.color : ''}`">
-      <v-tabs vertical v-model="tab" grow background-color="transparent">
+      <v-tabs direction="vertical" v-model="tab" grow background-color="transparent">
         <v-tab class="d-flex justify-start">
           Detalhamento de pontuação do INSS
         </v-tab>
-        <v-tab class="d-flex justify-start">
-          Descrição das Barreiras
-        </v-tab>
+        <v-tab class="d-flex justify-start"> Descrição das Barreiras </v-tab>
       </v-tabs>
-      <v-tabs-items v-model="tab">
-        <v-tab-item>
+      <v-window v-model="tab">
+        <v-window-item>
           <INSS />
-        </v-tab-item>
-        <v-tab-item>
+        </v-window-item>
+        <v-window-item>
           <Barriers />
-        </v-tab-item>
-      </v-tabs-items>
+        </v-window-item>
+      </v-window>
     </v-card>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
+import INSS from '@/components/INSS.vue';
+import Barriers from '@/components/Barriers.vue';
+
 export default {
-  name: "Helper",
-  data: () => ({
-    tab: null
-  }),
-  computed: mapGetters(["theme"]),
+  name: 'Helper',
+  data() {
+    return {
+      tab: null,
+    };
+  },
+  computed: mapGetters(['theme']),
   components: {
-    INSS: () => import("@/components/INSS"),
-    Barriers: () => import("@/components/Barriers")
-  }
+    INSS,
+    Barriers,
+  },
 };
 </script>
 

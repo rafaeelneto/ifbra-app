@@ -76,7 +76,7 @@
                 <v-img
                   max-width="25em"
                   max-height="10em"
-                  src="../assets/images/apoiase.svg"
+                  src="@/assets/images/apoiase.svg"
                   alt="Apoia-se"
                 />
               </v-col>
@@ -105,7 +105,7 @@
                 <v-img
                   max-width="25em"
                   max-height="10em"
-                  src="../assets/images/pix.svg"
+                  src="@/assets/images/pix.svg"
                   alt="Pix"
                 />
               </v-col>

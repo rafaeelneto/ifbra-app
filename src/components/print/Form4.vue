@@ -73,22 +73,22 @@
             `Houve pontuação 25 ou 50 em alguma atividade dos domínios ${row.Dominios.reduce(
               (out, el) => [
                 ...out,
-                normalize(el) === "socializacao"
-                  ? "Socialização e Vida Comunitária"
+                normalize(el) === 'socializacao'
+                  ? 'Socialização e Vida Comunitária'
                   : el,
               ],
               []
             ).join(
-              " ou "
+              ' ou '
             )}; OU Houve pontuação 75 em todas atividade dos domínios ${row.Dominios.reduce(
               (out, el) => [
                 ...out,
-                normalize(el) === "socializacao"
-                  ? "Socialização e Vida Comunitária"
+                normalize(el) === 'socializacao'
+                  ? 'Socialização e Vida Comunitária'
                   : el,
               ],
               []
-            ).join(" ou ")}`
+            ).join(' ou ')}`
           }}</v-card>
         </v-card>
       </v-col>
@@ -97,10 +97,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import LighterTextField from "@/components/LighterTextField.vue";
-import EmptyFormAlert from "@/components/print/EmptyFormAlert.vue";
-import eventBus from "@/utils/eventBus";
+import { mapGetters } from 'vuex';
+import LighterTextField from '@/components/LighterTextField.vue';
+import EmptyFormAlert from '@/components/print/EmptyFormAlert.vue';
+import eventBus from '@/utils/eventBus';
 
 export default {
   data() {
@@ -108,7 +108,7 @@ export default {
       fuzzySwitch: [false, false, false, false],
     };
   },
-  computed: mapGetters(["fuzzy", "printFuzzy", "theme"]),
+  computed: mapGetters(['fuzzy', 'printFuzzy', 'theme']),
   components: {
     LighterTextField,
     EmptyFormAlert,
@@ -129,11 +129,11 @@ export default {
       );
     },
     checkBox(check) {
-      return check ? "mdi-checkbox-marked" : "mdi-checkbox-blank-outline";
+      return check ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline';
     },
   },
   created() {
-    eventBus.on("score", this.setDomains);
+    eventBus.on('score', this.setDomains);
     this.setDomains();
     this.normalize = this.$custom.normalize;
   },

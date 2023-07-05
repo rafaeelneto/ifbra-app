@@ -46,7 +46,7 @@
       </v-dialog>
     </div>
 
-    <v-flex>
+    <div class="d-flex">
       <v-container>
         <FormHeader
           title="Formulário 4"
@@ -97,26 +97,15 @@
                     </v-col>
                     <v-col cols="12" md="5">
                       <v-hover>
-                        <template v-slot:default="{ hover }">
+                        <template v-slot:default="{ isHovering }">
                           <v-card
                             class="mx-auto"
                             flat
                             :class="`${!theme.dark ? theme.color : ''}`"
                           >
-                            <FuzzySwitch
-                              :innerLabel="`Houve pontuação 25 ou 50 em alguma atividade dos domínios ${formatDomain(
-                                deficiencia.Dominios
-                              )}; OU Houve pontuação 75 em todas atividade dos domínios ${formatDomain(
-                                deficiencia.Dominios
-                              )}`"
-                              :read-only="true"
-                              :deficiency-type="deficiencia.Type"
-                              :dominios="deficiencia.Dominios"
-                            />
-
                             <v-fade-transition>
                               <v-overlay
-                                v-if="hover"
+                                v-if="isHovering"
                                 absolute
                                 class="d-flex align-center justify-center"
                               >
@@ -144,12 +133,18 @@
           </div>
         </div>
       </v-container>
-    </v-flex>
+    </div>
   </div>
 </template>
 
 <script>
 import { defineAsyncComponent } from 'vue';
+
+import FuzzySwitch from '@/components/FuzzySwitch.vue';
+import LighterTextField from '@/components/LighterTextField.vue';
+import FormHeader from '@/components/forms/FormHeader.vue';
+
+import eventBus from '@/utils/eventBus';
 import Fuzzy from '@/assets/json/form4.json';
 import { mapActions, mapGetters } from 'vuex';
 export default {
@@ -164,9 +159,9 @@ export default {
     printFuzzy: {},
   }),
   components: {
-    FuzzySwitch: () => import('@/components/FuzzySwitch.vue'),
-    LighterTextField: () => import('@/components/LighterTextField.vue'),
-    FormHeader: () => import('@/components/forms/FormHeader.vue'),
+    FuzzySwitch,
+    LighterTextField,
+    FormHeader,
   },
   computed: {
     ...mapGetters(['fuzzy', 'theme', 'allScores', 'personal', 'fuzzyType']),
@@ -198,7 +193,7 @@ export default {
           dominios: deficiency.Dominios,
           normalize: this.$custom.normalize,
         });
-        this.$eventHub.$emit('fuzzyfy', deficiency.Dominios);
+        eventBus.emit('fuzzyfy', deficiency.Dominios);
       }
     },
     updatePrint(i) {
@@ -219,7 +214,7 @@ export default {
     },
     overTheLay() {
       this.overlay = !this.overlay;
-      this.$eventHub.$emit('force-blur');
+      eventBus.emit('force-blur');
     },
     setWidth: () => (this.width = window.innerWidth),
     ...mapActions([
@@ -240,7 +235,7 @@ export default {
     },
   },
   created() {
-    this.$eventHub.$emit('score');
+    eventBus.emit('score');
     this.makePrintFuzzy(Fuzzy);
     this.setFuzzySwitch();
     this.makeFuzzy({

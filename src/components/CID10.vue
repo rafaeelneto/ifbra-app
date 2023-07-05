@@ -45,23 +45,30 @@
 </template>
 
 <script>
-import CID10 from "@/assets/json/cid10.min.json";
-import { mapGetters } from "vuex";
+import CID10 from '@/assets/json/cid10.min.json';
+import { mapGetters } from 'vuex';
+
+import AutoComplete from '@/components/AutoComplete.vue';
+import ManualIcon from '@/components/ManualIcon.vue';
+import LighterTextField from '@/components/LighterTextField.vue';
+
 export default {
-  data: () => ({
-    CID10: Object.values(CID10)
-  }),
-  components: {
-    AutoComplete: () => import("@/components/AutoComplete"),
-    ManualIcon: () => import("@/components/ManualIcon"),
-    LighterTextField: () => import("@/components/LighterTextField")
+  data() {
+    return {
+      CID10: Object.values(CID10),
+    };
   },
-  computed: mapGetters(["theme"]),
+  components: {
+    AutoComplete,
+    ManualIcon,
+    LighterTextField,
+  },
+  computed: mapGetters(['theme']),
   methods: {
     newTab(ref) {
       this.$refs[ref].newTab();
-    }
-  }
+    },
+  },
 };
 </script>
 

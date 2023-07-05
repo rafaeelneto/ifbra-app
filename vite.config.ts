@@ -1,17 +1,18 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import { fileURLToPath, URL } from "url";
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import svgLoader from 'vite-svg-loader';
+import { fileURLToPath, URL } from 'url';
 
 export default defineConfig({
-  base: "/",
+  base: '/',
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   optimizeDeps: {
-    exclude: ["vuetify"],
-    entries: ["./src/**/*.vue"],
+    exclude: ['vuetify'],
+    entries: ['./src/**/*.vue'],
   },
   server: {
     fs: {
@@ -27,6 +28,9 @@ export default defineConfig({
           },
         },
       },
+    }),
+    svgLoader({
+      defaultImport: 'url',
     }),
   ],
 });

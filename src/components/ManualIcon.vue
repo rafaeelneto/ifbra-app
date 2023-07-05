@@ -1,15 +1,12 @@
 <template>
   <v-card
     tile
-    v-on="on"
-    v-bind="bind"
-    :class="
-      `d-flex justify-center align-center
+    v-bind="$props"
+    :class="`d-flex justify-center align-center
       ${left ? 'icon-left-card' : ''}
       ${right ? 'icon-right-card' : ''}
       ${theme.dark ? 'grey lighten-1' : 'light-blue lighten-4'}
-      `
-    "
+      `"
     flat
     height="3rem"
     width="3rem"
@@ -23,17 +20,18 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
+import eventBus from '@/utils/eventBus';
 export default {
-  name: "ManualIcon",
-  props: ["left", "right", "icon", "on", "bind", "url"],
-  computed: mapGetters(["theme"]),
+  name: 'ManualIcon',
+  props: ['left', 'right', 'icon', 'on', 'bind', 'url'],
+  computed: mapGetters(['theme']),
   methods: {
     newTab() {
-      this.$eventHub.$emit("force-blur");
+      eventBus.emit('force-blur');
       window.open(this.url);
-    }
-  }
+    },
+  },
 };
 </script>
 

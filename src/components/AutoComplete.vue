@@ -12,7 +12,6 @@
           :clearable="allowMultiple"
           :messages="messages"
           v-model="text"
-          v-bind="$props"
           variant="outlined"
           density="compact"
           chips
@@ -24,17 +23,17 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 export default {
-  name: "AutoComplete",
+  name: 'AutoComplete',
   data: () => ({
     value: null,
-    text: "",
+    text: '',
   }),
-  props: ["innerLabel", "allowMultiple", "innerHint", "messages", "require"],
+  props: ['innerLabel', 'allowMultiple', 'innerHint', 'messages', 'require'],
   methods: {
     clear() {
-      this.text = "";
+      this.text = '';
     },
     focus() {
       this.$refs.field.focus();
@@ -42,11 +41,11 @@ export default {
   },
   watch: {
     text(newValue) {
-      this.$emit("inner-change", newValue);
+      this.$emit('inner-change', newValue);
     },
   },
   computed: {
-    ...mapGetters(["allCID"]),
+    ...mapGetters(['allCID']),
   },
 };
 </script>

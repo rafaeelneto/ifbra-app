@@ -10,5 +10,6 @@ export default {
   components: {
     Disclaimer,
   },
+  name: 'LGPD',
 };
 </script>

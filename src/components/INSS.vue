@@ -1,19 +1,15 @@
 <template>
   <v-card flat :class="`${!theme.dark ? theme.color : ''}`">
-    <v-row>
+    <v-row no-gutters>
       <v-col
         cols="2"
         class="d-flex justify-center align-center"
         :class="{ 'vertical vertical-pad': width < 960 }"
       >
-        <span>
-          Pontuação
-        </span>
+        <span> Pontuação </span>
       </v-col>
       <v-col class="d-flex justify-center align-center">
-        <span>
-          Critério
-        </span>
+        <span> Critério </span>
       </v-col>
     </v-row>
     <div v-for="(pont, i) in INSSDesc" :key="i">
@@ -27,8 +23,8 @@
         </v-col>
         <v-col>
           {{ pont.Desc }}
-          <v-row>
-            <v-col class="align-center justify-center d-flex" md="2" cols="1">
+          <v-row no-gutters>
+            <v-col class="align-center justify-center d-flex md-2" cols="1">
               <div :class="{ 'vertical align-left': width < 960 }">
                 Observações
               </div>
@@ -64,13 +60,15 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import INSSDesc from "@/assets/json/inss.json";
+import { mapGetters } from 'vuex';
+import eventBus from '@/utils/eventBus';
+
+import INSSDesc from '@/assets/json/inss.json';
 export default {
-  name: "INSS",
+  name: 'INSS',
   data: () => ({
     INSSDesc: Object.values(INSSDesc),
-    width: false
+    width: false,
   }),
   created() {
     this.setWidth();
@@ -78,12 +76,15 @@ export default {
   methods: {
     setWidth() {
       this.width = window.innerWidth;
-    }
+    },
   },
   mounted() {
-    this.$eventHub.$on("resize", this.setWidth);
+    eventBus.on('resize', this.setWidth);
   },
-  computed: mapGetters(["theme"])
+  beforeUnmount() {
+    eventBus.off('resize', this.setWidth);
+  },
+  computed: mapGetters(['theme']),
 };
 </script>
 <style scoped>

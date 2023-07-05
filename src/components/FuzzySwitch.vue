@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid :class="innerClass">
+  <v-container fluid>
     <v-switch
       :class="innerClass"
       :readonly="readOnly"
@@ -11,46 +11,50 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
+import eventBus from '@/utils/eventBus';
 export default {
   data: () => ({
-    val: false
+    val: false,
   }),
-  name: "FuzzySwitch",
+  name: 'FuzzySwitch',
   props: [
-    "innerLabel",
-    "readOnly",
-    "disabled",
-    "dominios",
-    "deficiencyType",
-    "hint",
-    "innerClass",
-    "hideDetails"
+    'innerLabel',
+    'readOnly',
+    'disabled',
+    'dominios',
+    'deficiencyType',
+    'hint',
+    'innerClass',
+    'hideDetails',
   ],
   methods: {
-    ...mapActions(["updateFuzzyType"]),
+    ...mapActions(['updateFuzzyType']),
     setVal() {
       this.val = this.fuzzy
-        .filter(fuzzyEl =>
+        .filter((fuzzyEl) =>
           this.dominios.some(
-            domainEl =>
+            (domainEl) =>
               this.$custom.normalize(domainEl) ===
               this.$custom.normalize(fuzzyEl.Dominio)
           )
         )
-        .some(el => el.switch);
-      this.$eventHub.$emit("fuzzyScore",this.dominios)
-      if (this.val){
-        this.updateFuzzyType(this.deficiencyType)
+        .some((el) => el.switch);
+      eventBus.emit('fuzzyScore', this.dominios);
+      if (this.val) {
+        this.updateFuzzyType(this.deficiencyType);
       }
-    }
+    },
   },
   computed: {
-    ...mapGetters(["fuzzy"])
+    ...mapGetters(['fuzzy']),
   },
   created() {
-    this.$eventHub.$on("score", this.setVal);
-  }
+    eventBus.on('score', this.setVal);
+  },
+  beforeUnmount() {
+    eventBus.off('score', this.setVal);
+  },
 };
 </script>
 <style scoped>

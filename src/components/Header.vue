@@ -71,22 +71,22 @@
 </template>
 
 <script lang="ts">
-import { mapActions, mapGetters } from "vuex";
-import eventBus from "@/utils/eventBus";
+import { mapActions, mapGetters } from 'vuex';
+import eventBus from '@/utils/eventBus';
 
-import Theme from "@/components/Theme.vue";
-import PrivacyAlert from "@/components/PrivacyAlert.vue";
-import ReportDialog from "@/components/ReportDialog.vue";
+import Theme from '@/components/Theme.vue';
+import PrivacyAlert from '@/components/PrivacyAlert.vue';
+import ReportDialog from '@/components/ReportDialog.vue';
 
 export default {
-  name: "AppHeader",
+  name: 'AppHeader',
   data: () => ({
     drawer: false,
     menu: [
-      ["Formulários", "/"],
-      ["Informações", "info"],
-      ["Privacidade", "lgpd"],
-      ["Contribua", "apoio"],
+      ['Formulários', '/'],
+      ['Informações', 'info'],
+      ['Privacidade', 'lgpd'],
+      ['Contribua', 'apoio'],
     ],
     width: 0,
   }),
@@ -95,23 +95,23 @@ export default {
     PrivacyAlert,
     ReportDialog,
   },
-  computed: mapGetters(["theme"]),
+  computed: mapGetters(['theme']),
   mounted() {
-    eventBus.on("resize", this.setWidth);
+    eventBus.on('resize', this.setWidth);
   },
   methods: {
-    ...mapActions(["updatePrintView"]),
+    ...mapActions(['updatePrintView']),
     setWidth() {
       this.width = window.innerWidth;
     },
     showPrintView() {
-      eventBus.emit("update-printview");
+      eventBus.emit('update-printview');
       this.updatePrintView();
-      eventBus.emit("force-blur");
+      eventBus.emit('force-blur');
     },
   },
   beforeUnmount() {
-    eventBus.off("resize", this.setWidth);
+    eventBus.off('resize', this.setWidth);
   },
 };
 </script>
