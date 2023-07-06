@@ -1,5 +1,5 @@
 <template>
-    <v-switch v-model="val" hide-details/>
+    <v-switch color="primary" v-model="val" hide-details/>
 </template>
 
 <script>

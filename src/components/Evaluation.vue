@@ -123,25 +123,25 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import CheckList from "@/components/CheckList.vue";
-import DateDialog from "@/components/DateDialog.vue";
+import { mapActions, mapGetters } from 'vuex';
+import CheckList from '@/components/CheckList.vue';
+import DateDialog from '@/components/DateDialog.vue';
 
 export default {
   data() {
     return {
-      evaluatorType: ["Médico", "Assistente Social"],
-      registryType: "Registro profissional",
-      name: "",
-      type: "",
+      evaluatorType: ['Médico', 'Assistente Social'],
+      registryType: 'Registro profissional',
+      name: '',
+      type: '',
       registry: {
-        value: "",
-        label: "",
+        value: '',
+        label: '',
       },
       count: 0,
-      hintTypeEval: "",
-      hintEvalName: "",
-      hintEvalValue: "",
+      hintTypeEval: '',
+      hintEvalName: '',
+      hintEvalValue: '',
     };
   },
   components: {
@@ -149,30 +149,30 @@ export default {
     DateDialog,
   },
   methods: {
-    ...mapActions(["addEvaluator", "removeEvaluator", "setDate"]),
+    ...mapActions(['addEvaluator', 'removeEvaluator', 'setDate']),
     addEval() {
       if (this.name.length === 0) {
-        this.hintEvalName = "Insira o nome do avaliador";
+        this.hintEvalName = 'Insira o nome do avaliador';
         this.$refs.evalName.focus();
         return;
       } else {
-        this.hintEvalName = "";
+        this.hintEvalName = '';
       }
 
       if (this.type.length === 0) {
-        this.hintTypeEval = "Insira tipo de avaliador";
+        this.hintTypeEval = 'Insira tipo de avaliador';
         this.$refs.evalType.innerFocus();
         return;
       } else {
-        this.hintTypeEval = "";
+        this.hintTypeEval = '';
       }
 
       if (this.registry.value.length === 0) {
-        this.hintEvalValue = "Insira registro profissional";
+        this.hintEvalValue = 'Insira registro profissional';
         this.$refs.evalValue.innerFocus();
         return;
       } else {
-        this.hintEvalValue = "";
+        this.hintEvalValue = '';
       }
 
       const evaluator = {
@@ -183,11 +183,11 @@ export default {
       };
       this.count++;
       this.addEvaluator(evaluator);
-      this.name = "";
-      this.registryType = "Registro profissional";
+      this.name = '';
+      this.registryType = 'Registro profissional';
       this.registry = {
-        value: "",
-        label: "",
+        value: '',
+        label: '',
       };
       this.$refs.evalType.clear();
     },
@@ -196,20 +196,20 @@ export default {
     type() {
       if (!this.type) return;
       const normalizedType = this.$custom.normalize(this.type).toLowerCase();
-      if (normalizedType === "medico") {
-        this.registryType = "CRM";
-        this.registry.label = "CRM";
+      if (normalizedType === 'medico') {
+        this.registryType = 'CRM';
+        this.registry.label = 'CRM';
       }
-      if (normalizedType.includes("social")) {
-        this.registryType = "CRESS";
-        this.registry.label = "CRESS";
+      if (normalizedType.includes('social')) {
+        this.registryType = 'CRESS';
+        this.registry.label = 'CRESS';
       }
     },
   },
   computed: {
-    ...mapGetters(["allEvaluators", "theme"]),
+    ...mapGetters(['allEvaluators', 'theme']),
     required() {
-      return (val) => [(val || "").length > 0 || "Campo obrigatório"];
+      return (val) => [(val || '').length > 0 || 'Campo obrigatório'];
     },
   },
 };

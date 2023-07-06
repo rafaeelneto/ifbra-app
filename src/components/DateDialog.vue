@@ -7,19 +7,22 @@
     :max-date="maxDate || new Date()"
     :month-change-on-scroll="false"
     text-input
+    :dark="theme.dark"
   />
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   data: () => ({
     date: new Date(),
   }),
-  props: ["label", "maxDate", "defaultDate", "readonly"],
+  props: ['label', 'maxDate', 'defaultDate', 'readonly'],
   methods: {},
+  computed: mapGetters(['theme']),
   watch: {
     date: function () {
-      this.$emit("inner-date", this.date);
+      this.$emit('inner-date', this.date);
     },
   },
   created() {
@@ -32,3 +35,14 @@ export default {
   },
 };
 </script>
+
+<style>
+.dp__theme_dark {
+  --dp-background-color: rgb(var(--v-theme-background));
+  --dp-primary-color: rgb(var(--v-theme-primary));
+  --dp-menu-border-color: rgb(var(--v-theme-primary-light-1));
+}
+.dp__theme_light {
+  --dp-primary-color: rgb(var(--v-theme-primary));
+}
+</style>

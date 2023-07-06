@@ -4,6 +4,7 @@
     <v-container>
       <v-tabs
         class="hidden-sm-and-down tab-title"
+        color="primary"
         v-model="tab"
         background-color="transparent"
         grow

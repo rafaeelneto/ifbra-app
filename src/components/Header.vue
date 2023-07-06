@@ -2,6 +2,8 @@
   <v-app-bar
     tile
     fixed
+    class="appBar"
+    elevation="0"
     :density="width < 960 ? 'compact' : 'default'"
     :color="!theme.dark ? 'primary' : ''"
   >
@@ -13,8 +15,8 @@
     <v-toolbar-title class="title">IFBr-A</v-toolbar-title>
     <div class="hidden-sm-and-down aling-start">
       <v-btn
+        :color="theme.dark ? 'primary-light-1' : ''"
         depressed
-        :color="theme.dark ? 'primary' : ''"
         v-for="(item, i) in menu"
         :key="i"
         :to="item[1]"
@@ -30,12 +32,12 @@
     <v-item-group>
       <div class="d-flex flex-row">
         <div class="hidden-md-and-up">
-          <v-btn :color="theme.dark ? 'primary' : ''" tile small>
+          <v-btn tile small>
             <v-icon @click="showPrintView()">mdi-printer</v-icon>
           </v-btn>
         </div>
         <div class="hidden-sm-and-down">
-          <v-btn :color="theme.dark ? 'primary' : ''" tile>
+          <v-btn tile>
             <v-icon @click="showPrintView()">mdi-printer</v-icon>
           </v-btn>
         </div>
@@ -102,6 +104,9 @@ export default {
 </script>
 
 <style scoped>
+.appBar {
+  border-bottom: 1px solid rgb(var(--v-theme-primary))
+}
 .title {
   padding: 1rem;
 }
