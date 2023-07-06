@@ -7,7 +7,7 @@
     <v-row>
       <v-col v-if="allEvaluators.length > 0">
         Data da Avaliação:
-        {{ format(evalDate, "dd/MM/yyyy") }}
+        {{ format(evalDate, 'dd/MM/yyyy') }}
       </v-col>
     </v-row>
     <v-row v-for="evaluator in allEvaluators" :key="evaluator.id">
@@ -32,54 +32,58 @@
       <v-col>Dados do Avaliado</v-col>
     </v-row>
     <v-row>
-      <v-col cols="6">Nome: {{ personal.name || "" }} </v-col>
+      <v-col cols="6">Nome: {{ personal.name || '' }} </v-col>
       <v-col>
         Nascimento:
         {{
           this.personal.birthday.length > 0
-            ? format(this.personal.birthday, "dd/MM/yyyy")
-            : ""
+            ? format(this.personal.birthday, 'dd/MM/yyyy')
+            : ''
         }}
       </v-col>
       <v-col>
-        Idade: {{ personal.age.length > 0 ? `${personal.age} anos` : "" }}
+        Idade: {{ personal.age.length > 0 ? `${personal.age} anos` : '' }}
       </v-col>
     </v-row>
     <v-row>
-      <v-col>Matrícula: {{ personal.registry || "" }}</v-col>
-      <v-col>Sexo: {{ personal.sex || "" }}</v-col>
-      <v-col>Etnia: {{ personal.ethnicity || "" }}</v-col>
+      <v-col>Matrícula: {{ personal.registry || '' }}</v-col>
+      <v-col>Sexo: {{ personal.sex || '' }}</v-col>
+      <v-col>Etnia: {{ personal.ethnicity || '' }}</v-col>
     </v-row>
     <v-row>
       <v-col>
-        Tipo{{ personal.deficiencyType.length > 1 ? "s" : "" || "" }} de
-        Deficiência: {{ personal.deficiencyType.join(", ") || "" }}
+        Tipo{{ personal.deficiencyType.length > 1 ? 's' : '' }} de Deficiência:
+        {{
+          personal.deficiencyType && personal.deficiencyType.length
+            ? personal.deficiencyType.join(', ')
+            : ''
+        }}
       </v-col>
       <v-col>
         Diagnóstico Médico:
-        {{ personal.CID.join(", ").replace(": ", " - ") || "" }}
+        {{ personal.CID.join(', ').replace(': ', ' - ') || '' }}
       </v-col>
     </v-row>
     <v-row>
-      <v-col>Histórico Clínico: {{ personal.history || "" }}</v-col>
+      <v-col>Histórico Clínico: {{ personal.history || '' }}</v-col>
     </v-row>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
-import LighterTextField from "@/components/LighterTextField.vue";
-import EmptyFormAlert from "@/components/print/EmptyFormAlert.vue";
+import LighterTextField from '@/components/LighterTextField.vue';
+import EmptyFormAlert from '@/components/print/EmptyFormAlert.vue';
 
 export default {
   components: {
     LighterTextField,
     EmptyFormAlert,
   },
-  computed: mapGetters(["evalDate", "personal", "allEvaluators"]),
+  computed: mapGetters(['evalDate', 'personal', 'allEvaluators']),
   methods: {
     format,
   },

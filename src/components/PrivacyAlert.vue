@@ -3,7 +3,7 @@
     <v-btn
       small
       tile
-      :color="`${theme.dark ? 'black' : 'white'}`"
+      :color="theme.dark ? 'primary' : ''"
       class="hidden-md-and-up"
       depressed
       @click="dialog = true"
@@ -12,7 +12,7 @@
     </v-btn>
     <v-btn
       tile
-      :color="`${theme.dark ? 'black' : 'white'}`"
+      :color="theme.dark ? 'primary' : ''"
       class="hidden-sm-and-down"
       depressed
       @click="dialog = true"
