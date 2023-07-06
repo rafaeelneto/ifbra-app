@@ -3,9 +3,7 @@
     <v-container :class="`${theme.dark ? '' : theme.color}`">
       <v-card tile flat :class="`${theme.dark ? '' : theme.color}`">
         <v-card-title class="text-center justify-center">
-          <h1 class="font-weight-bold display-3">
-            Contribua
-          </h1>
+          <h1 class="font-weight-bold display-3">Contribua</h1>
         </v-card-title>
         <v-card-text>
           <h3>
@@ -73,18 +71,15 @@
           >
             <v-row class="d-flex flex-row align-center">
               <v-col cols="12" md="5">
-                <v-img
-                  max-width="25em"
-                  max-height="10em"
+                <img
+                  class="img"
                   src="@/assets/images/apoiase.svg"
                   alt="Apoia-se"
                 />
               </v-col>
               <v-col cols="12" md="7">
                 <v-card tile flat :class="`${theme.dark ? '' : theme.color}`">
-                  <v-card-title>
-                    Contribua pelo Apoia-se
-                  </v-card-title>
+                  <v-card-title> Contribua pelo Apoia-se </v-card-title>
                   <v-card-text>
                     Compre-me um café de R$ 5,00 ou um milkshake de R$ 15,00 e
                     ajude a manter essa página.
@@ -102,12 +97,7 @@
           >
             <v-row class="d-flex flex-row align-center">
               <v-col cols="12" md="5">
-                <v-img
-                  max-width="25em"
-                  max-height="10em"
-                  src="@/assets/images/pix.svg"
-                  alt="Pix"
-                />
+                <img class="img" src="@/assets/images/pix.svg" alt="Pix" />
               </v-col>
               <v-col cols="12" md="7">
                 <v-card tile flat :class="`${theme.dark ? '' : theme.color}`">
@@ -136,25 +126,25 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 export default {
   data: () => ({ dialog: false }),
   methods: {
     apoia() {
-      this.$eventHub.$emit("force-blur");
-      window.open("https://apoia.se/ifbra");
+      this.$eventHub.$emit('force-blur');
+      window.open('https://apoia.se/ifbra');
     },
     clipboard() {
-      this.$eventHub.$emit("force-blur");
-      navigator.clipboard.writeText("ifbra@outlook.com");
+      this.$eventHub.$emit('force-blur');
+      navigator.clipboard.writeText('ifbra@outlook.com');
       this.dialog = true;
     },
     open(link) {
       window.open(link);
     },
     mail() {
-      location.href = "mailto:ifbra@outlook.com";
-    }
+      location.href = 'mailto:ifbra@outlook.com';
+    },
   },
   watch: {
     dialog() {
@@ -163,11 +153,11 @@ export default {
           this.dialog = false;
         }, 2000);
       }
-    }
+    },
   },
   computed: {
-    ...mapGetters(["theme"])
-  }
+    ...mapGetters(['theme']),
+  },
 };
 </script>
 
@@ -181,5 +171,9 @@ export default {
 .divider {
   margin-bottom: 1em;
   margin-top: 1em;
+}
+
+.img {
+  max-width: 25em;
 }
 </style>
