@@ -8,6 +8,7 @@
 
         <v-tabs
           v-model="tab"
+          color="primary"
           background-color="transparent"
           direction="vertical"
           grow

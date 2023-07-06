@@ -82,14 +82,16 @@
                     tile
                   >
                     <v-col class="text-center" cols="12" md="3">
-                      <v-switch
+                      <v-checkbox
+                        color="secondary"
                         @change="switched(deficiencia, i)"
                         v-model="printFuzzy[i].severe"
                         :label="deficiencia.Obs"
                       />
                     </v-col>
                     <v-col cols="12" md="4">
-                      <v-switch
+                      <v-checkbox
+                        color="secondary"
                         @click="switched(deficiencia, i)"
                         v-model="printFuzzy[i].needAid"
                         label="Não dispõe de auxílio de terceiros sempre que necessário."
@@ -97,32 +99,37 @@
                     </v-col>
                     <v-col cols="12" md="5">
                       <v-hover>
-                        <template v-slot:default="{ isHovering }">
-                          <v-card
+                        <template v-slot:default="{ isHovering, props }">
+                          {{ isHovering }}
+                          <div
                             class="mx-auto"
-                            flat
                             :class="`${!theme.dark ? theme.color : ''}`"
                           >
-                            <v-fade-transition>
-                              <v-overlay
-                                v-if="isHovering"
-                                absolute
-                                class="d-flex align-center justify-center"
-                              >
-                                <v-card
-                                  flat
-                                  class="pad-me"
-                                  :color="`${
-                                    !theme.dark
-                                      ? 'blue-grey ligthen-4'
-                                      : 'blue-grey darken-2'
-                                  }`"
-                                >
-                                  Campo preenchido automaticamente.
-                                </v-card>
-                              </v-overlay>
-                            </v-fade-transition>
-                          </v-card>
+                            <FuzzySwitch
+                              :innerLabel="`Houve pontuação 25 ou 50 em alguma atividade dos domínios ${formatDomain(
+                                deficiencia.Dominios
+                              )}; OU Houve pontuação 75 em todas atividade dos domínios ${formatDomain(
+                                deficiencia.Dominios
+                              )}`"
+                              :read-only="true"
+                              :deficiency-type="deficiencia.Type"
+                              :dominios="deficiencia.Dominios"
+                            />
+                          </div>
+                          <div
+                            v-if="isHovering"
+                            class="
+                              pad-me
+                              d-flex
+                              align-center
+                              justify-center
+                              position-absolute
+                              color-white
+                              bg-primary-darker-1
+                            "
+                          >
+                            Campo preenchido automaticamente.
+                          </div>
                         </template>
                       </v-hover>
                     </v-col>

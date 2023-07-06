@@ -1,5 +1,5 @@
 <template>
-    <v-switch color="primary" v-model="val" hide-details/>
+  <v-checkbox color="secondary" v-model="val" hide-details />
 </template>
 
 <script>
@@ -7,7 +7,7 @@ export default {
   data: () => ({
     val: false,
   }),
-  name: "RowSwitch",
+  name: 'RowSwitch',
   props: {
     makeActive: Boolean,
     innerLabel: String,

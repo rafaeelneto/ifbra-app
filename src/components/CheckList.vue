@@ -2,6 +2,7 @@
   <v-select
     :density="makeDense ? 'compact' : 'default'"
     :label="innerLabel"
+    color="primary"
     v-model="selectedItems"
     :items="innerItems"
     :multiple="allowMultiple"
@@ -15,7 +16,7 @@
     <template v-if="allowMultiple" v-slot:prepend-item>
       <v-list-item ripple @click="toggle">
         <v-list-item-action>
-          <v-icon :color="selectedItems.length > 0 ? 'indigo darken-4' : ''">
+          <v-icon :color="selectedItems.length > 0 ? 'secondary' : ''">
             {{ icon }}
           </v-icon>
         </v-list-item-action>

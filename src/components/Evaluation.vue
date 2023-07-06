@@ -2,7 +2,7 @@
   <div :class="`form ${!theme.dark ? theme.color : ''} d-flex`">
     <v-container>
       <v-row dense class="d-flex text-center justify-center">
-        <h1 class="pad-top font-weight-bold display-3 basil--text">
+        <h1 class="font-weight-bold display-3 basil--text">
           Avaliação Médica Funcional
         </h1>
       </v-row>
@@ -56,12 +56,8 @@
           />
         </v-col>
         <!-- eval button -->
-        <v-col
-          md="1"
-          cols="1"
-          class="d-flex justify-center align-center text-center"
-        >
-          <v-btn @click="addEval()" icon class="align-center">
+        <v-col md="1" cols="1" class="d-flex justify-center text-center">
+          <v-btn @click="addEval()" color="secondary" icon class="align-center">
             <v-icon>mdi-plus-box</v-icon>
           </v-btn>
         </v-col>

@@ -13,18 +13,20 @@ const light = {
     'primary-light-1': '#44CDB5',
     'primary-dark-1': '#0E6A6D',
     secondary: '#FD8753',
+    error: '#EC403F',
   },
 };
 
 const dark = {
   dark: true,
   colors: {
-    primary: '#1E817F',
+    primary: '#44CDB5',
     'primary-light-1': '#44CDB5',
     'primary-dark-1': '#0E6A6D',
     secondary: '#FD8753',
     background: '#1c262e',
     surface: '#1c262e',
+    error: '#EC403F',
   },
 };
 

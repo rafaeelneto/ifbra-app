@@ -3,7 +3,7 @@
     <v-container :class="`${theme.dark ? '' : theme.color}`">
       <v-card tile flat :class="`${theme.dark ? '' : theme.color}`">
         <v-card-title class="text-center justify-center">
-          <h1 class="font-weight-bold display-3">Contribua</h1>
+          <h1 class="font-weight-bold display-3 mb-6">Contribua</h1>
         </v-card-title>
         <v-card-text>
           <h3>

@@ -1,7 +1,5 @@
 <template>
   <v-app-bar
-    tile
-    fixed
     class="appBar"
     elevation="0"
     :density="width < 960 ? 'compact' : 'default'"
@@ -12,7 +10,7 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </div>
-    <v-toolbar-title class="title">IFBr-A</v-toolbar-title>
+    <v-toolbar-title class="title" style="flex: unset">IFBr-A</v-toolbar-title>
     <div class="hidden-sm-and-down aling-start">
       <v-btn
         :color="theme.dark ? 'primary-light-1' : ''"
@@ -20,8 +18,7 @@
         v-for="(item, i) in menu"
         :key="i"
         :to="item[1]"
-        class="margin"
-        tile
+        class="mr-2"
       >
         {{ item[0] }}
       </v-btn>
@@ -92,9 +89,7 @@ export default {
       this.width = window.innerWidth;
     },
     showPrintView() {
-      eventBus.emit('update-printview');
       this.updatePrintView();
-      eventBus.emit('force-blur');
     },
   },
   beforeUnmount() {
@@ -105,13 +100,10 @@ export default {
 
 <style scoped>
 .appBar {
-  border-bottom: 1px solid rgb(var(--v-theme-primary))
+  border-bottom: 1px solid rgb(var(--v-theme-primary));
 }
 .title {
   padding: 1rem;
-}
-.margin {
-  margin-right: 0.2rem;
 }
 .black-bg {
   background-color: black;

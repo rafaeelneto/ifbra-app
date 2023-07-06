@@ -1,13 +1,13 @@
 <template>
   <v-app id="app">
-    <PrintView v-if="printView" />
+    <PrintView v-if="printView" @exitPrintView="this.close" />
     <ScrollTop />
     <template v-if="!printView">
       <AppHeader></AppHeader>
-      <v-main style="padding-top: 0">
+      <v-main style="padding-top: 32px">
         <router-view />
-        <Footer />
       </v-main>
+      <Footer />
     </template>
   </v-app>
 </template>
@@ -26,7 +26,7 @@ import PrintView from '@/components/print/PrintView.vue';
 import ScrollTop from '@/components/ScrollTop.vue';
 
 export default {
-  data: () => ({ media: null }),
+  data: () => ({ media: null,}),
   components: {
     AppHeader,
     Footer,
@@ -34,7 +34,7 @@ export default {
     ScrollTop,
   },
   methods: {
-    ...mapActions(['updatePrintView', 'setTheme']),
+    ...mapActions(['setTheme', 'updatePrintView']),
     close() {
       this.updatePrintView();
     },
@@ -69,7 +69,7 @@ export default {
   mounted() {
     window.addEventListener('resize', this.setWidth);
   },
-  computed: mapGetters(['printView', 'theme']),
+  computed: mapGetters(['theme', 'printView']),
   beforeUnmount() {
     eventBus.off('theme', this.setVueTheme);
     eventBus.off('force-blur', this.forceBlur);
@@ -90,5 +90,9 @@ export default {
 }
 .default-grey {
   background-color: #121212 !important;
+}
+
+a {
+  color: rgb(var(--v-theme-primary));
 }
 </style>

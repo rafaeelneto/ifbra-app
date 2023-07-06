@@ -32,10 +32,10 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import eventBus from "@/utils/eventBus";
+import { mapGetters } from 'vuex';
+import eventBus from '@/utils/eventBus';
 
-import Report from "@/components/Report.vue";
+import Report from '@/components/Report.vue';
 
 export default {
   data: () => ({
@@ -43,7 +43,7 @@ export default {
     control: true,
   }),
   components: { Report },
-  computed: mapGetters(["filledStatus"]),
+  computed: mapGetters(['filledStatus']),
   methods: {
     showDialog() {
       if (this.control) {
@@ -53,10 +53,10 @@ export default {
     },
   },
   created() {
-    eventBus.on("filled", this.showDialog);
+    eventBus.on('filled', this.showDialog);
   },
   beforeUnmount() {
-    eventBus.off("filled", this.showDialog);
+    eventBus.off('filled', this.showDialog);
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-switch
+    <v-checkbox
       :class="innerClass"
       :readonly="readOnly"
       :disabled="disabled"

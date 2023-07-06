@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card class="pa-4" elevation="0">
     <v-card-title class="d-flex justify-center">
       <h1>Alerta de Privacidade "LGPD"</h1>
     </v-card-title>

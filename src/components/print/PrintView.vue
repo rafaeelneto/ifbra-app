@@ -1,5 +1,5 @@
 <template>
-  <div :class="`print-btn ${!printView ? 'd-none' : ''}`">
+  <div :class="`print-btn`">
     <v-card :class="`${theme.dark ? '' : theme.color}`">
       <PrintBar />
       <v-container id="print-section">
@@ -32,17 +32,17 @@
 </template>
 
 <script lang="ts">
-import eventBus from "@/utils/eventBus";
-import { mapActions, mapGetters } from "vuex";
+import eventBus from '@/utils/eventBus';
+import { mapActions, mapGetters } from 'vuex';
 
-import PrintBar from "@/components/print/PrintBar.vue";
-import Form1 from "@/components/print/Form1.vue";
-import Form2 from "@/components/print/Form2.vue";
-import Form3 from "@/components/print/Form3.vue";
-import Form4 from "@/components/print/Form4.vue";
-import MiniReport from "@/components/print/MiniReport.vue";
-import ClassificationBoard from "@/components/print/ClassificationBoard.vue";
-import Report from "@/components/Report.vue";
+import PrintBar from '@/components/print/PrintBar.vue';
+import Form1 from '@/components/print/Form1.vue';
+import Form2 from '@/components/print/Form2.vue';
+import Form3 from '@/components/print/Form3.vue';
+import Form4 from '@/components/print/Form4.vue';
+import MiniReport from '@/components/print/MiniReport.vue';
+import ClassificationBoard from '@/components/print/ClassificationBoard.vue';
+import Report from '@/components/Report.vue';
 
 export default {
   data: () => ({
@@ -52,26 +52,28 @@ export default {
     widgets: false,
   }),
   methods: {
-    ...mapActions(["updatePrintView"]),
     close() {
-      this.updatePrintView();
-      eventBus.emit("force-blur");
+      $emit('exitPrintView');
     },
     firstLast(name) {
-      name = (name || "").length > 0 || "nome";
-      let arr = name.split(" ");
-      return arr.length > 1 ? [arr[0], arr[arr.length - 1]].join("_") : name;
+      name = (name || '').length > 0 || 'nome';
+      let arr = name.split(' ');
+      return arr.length > 1 ? [arr[0], arr[arr.length - 1]].join('_') : name;
+    },
+    onEscKeyPress(e) {
+      if (e.keyCode == 27) {
+        this.close();
+      }
     },
   },
   computed: mapGetters([
-    "personal",
-    "allEvaluators",
-    "evalDate",
-    "bodyFunctions",
-    "allScores",
-    "theme",
-    "fuzzy",
-    "printView",
+    'personal',
+    'allEvaluators',
+    'evalDate',
+    'bodyFunctions',
+    'allScores',
+    'theme',
+    'fuzzy',
   ]),
   components: {
     PrintBar,
@@ -84,11 +86,10 @@ export default {
     Report,
   },
   mounted() {
-    document.addEventListener("keydown", (e) => {
-      if (e.keyCode == 27 && this.printView) {
-        this.close();
-      }
-    });
+    document.addEventListener('keydown', this.onEscKeyPress);
+  },
+  beforeUnmount() {
+    document.removeEventListener('keydown', this.onEscKeyPress);
   },
 };
 </script>

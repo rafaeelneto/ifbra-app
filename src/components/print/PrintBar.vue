@@ -40,12 +40,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex';
 export default {
-  computed: mapGetters(["printView", "theme"]),
+  computed: mapGetters(['theme']),
   data: () => ({ dialog: false }),
   methods: {
-    ...mapActions(["updatePrintView"]),
+    ...mapActions(['updatePrintView']),
     updatePrint() {
       this.updatePrintView();
     },
@@ -55,7 +55,7 @@ export default {
         window.print();
         this.updatePrint();
         if (support) {
-          window.location.href = "#/apoio";
+          window.location.href = '#/apoio';
         }
       }, 200);
     },
